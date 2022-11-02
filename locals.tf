@@ -15,4 +15,8 @@ locals {
                                             "arn"   = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
                                         }]
                         }
+
+    rds_monitoring_role_arn = var.enable_enhanced_monitoring ? (
+                                !var.create_monitoring_role ? data.aws_iam_role.this[0].arn : module.rds_monitoring_role[0].service_linked_roles[var.monitoring_role_name].arn
+                            ) : null
 }

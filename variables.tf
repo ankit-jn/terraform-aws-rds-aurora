@@ -209,38 +209,6 @@ variable "iam_database_authentication_enabled" {
 }
 
 #################################################
-## Monitoring Properties
-#################################################
-variable "enable_enhanced_monitoring" {
-    description = "Flag to decide if enhanced monitoring should be enabled"
-    type        = bool
-    default     = false
-}
-
-variable "monitoring_granularity" {
-    description = "Monitoring Interval, in seconds"
-    type        = number
-    default     = 0 # disable
-
-    validation {
-        condition = contains([0, 1, 5, 10, 15, 30, 60], var.monitoring_granularity)
-        error_message = "Valid values are 0, 1, 5, 10, 15, 30, 60."
-    }
-}
-
-variable "create_monitoring_role" {
-    description = "Flag to decide if IAM role to be created for monitoring"
-    type        = bool
-    default     = false
-}
-
-variable "monitoring_role_name" {
-    description = "Flag to decide if enhanced monitoring should be enabled"
-    type        = string
-    default     = "rds-monitoring-role"
-}
-
-#################################################
 ## Additional configuration Properties
 #################################################
 variable "database_name" {
@@ -305,7 +273,7 @@ variable "backup_retention_period" {
 }
 
 variable "copy_tags_to_snapshot" {
-    description = "Copy all Cluster tags to snapshots."
+    description = "Copy all tags from DB cluster to snapshots."
     type        = bool
     default     = false
 }
@@ -538,7 +506,7 @@ variable "cluster_tags" {
 }
 
 variable "instance_tags" {
-    description = "A map of tags to assign to the DB Instance."
+    description = "A map of tags to assign to all the DB Instance."
     type        = map(string)
     default     = {}
 }
@@ -580,4 +548,130 @@ variable "ssm_master_password" {
     description = "Flag to decide if the master_password should be stored as SSM parameter"
     type = bool
     default = true
+}
+
+#################################################
+## DB Instances
+#################################################
+variable "instance_class" {
+    description = "The compute and memory capacity of each DB instance in the Multi-AZ DB cluster"
+    type        = string
+    default     = null
+}
+
+variable "publicly_accessible" {
+    description = "Flag to decide if instances are publicly accessible"
+    type        = bool
+    default     = false
+}
+
+variable "auto_minor_version_upgrade" {
+    description = "Enable to allow minor engine upgrades utomatically to the DB instance during the maintenance window."
+    type        = bool
+    default     = true
+}
+
+## Monitoring Properties
+variable "enable_enhanced_monitoring" {
+    description = "Flag to decide if enhanced monitoring should be enabled"
+    type        = bool
+    default     = false
+}
+
+variable "monitoring_granularity" {
+    description = "Monitoring Interval, in seconds, to apply on each DB instance"
+    type        = number
+    default     = 0 # disable
+
+    validation {
+        condition = contains([0, 1, 5, 10, 15, 30, 60], var.monitoring_granularity)
+        error_message = "Valid values are 0, 1, 5, 10, 15, 30, 60."
+    }
+}
+
+variable "create_monitoring_role" {
+    description = "Flag to decide if IAM role to be created for monitoring"
+    type        = bool
+    default     = false
+}
+
+variable "monitoring_role_name" {
+    description = "Flag to decide if enhanced monitoring should be enabled"
+    type        = string
+    default     = "rds-monitoring-role"
+}
+
+variable "performance_insights_enabled" {
+  description = "Specifies whether Performance Insights is enabled or not"
+  type        = bool
+  default     = false
+}
+
+variable "performance_insights_kms_key" {
+    description = <<EOF
+The reference of the KMS key to encrypt Performance Insights data.
+key Reference could be either of this format:
+
+- 1234abcd-12ab-34cd-56ef-1234567890ab
+- arn:aws:kms:<region>:<account no>:key/1234abcd-12ab-34cd-56ef-1234567890ab
+- alias/my-key
+- arn:aws:kms:<region>:<account no>:alias/my-key
+EOF
+    type        = string
+    default     = null
+}
+
+variable "performance_insights_retention_period" {
+  description = "Amount of time in days to retain Performance Insights data. Either 7 (7 days) or 731 (2 years)"
+  type        = number
+  default     = 7
+}
+
+variable "instances" {
+    description = <<EOF
+List of cluster instances map where each entry of the list may have following attributes for the instance to override
+
+name                    : (Required) The identifier for the RDS instance
+instance_class          : (Required) The instance class to use.
+
+availability_zone       : (Optional) The EC2 Availability Zone that the DB instance is created in.
+publicly_accessible     : (Optional) Flag to control if instance is publicly accessible.
+                          Default - The one set via instances' common property `monitoring_granularity`
+promotion_tier          : (Optional) Failover Priority setting on instance level.
+                          Default - `0`
+
+auto_minor_version_upgrade: (Optional) Enable to allow minor engine upgrades utomatically to the DB instance during the maintenance window.
+                            Default - The one set via instances' common property `auto_minor_version_upgrade`
+apply_immediately       : (Optional) Specifies whether any database modifications are applied immediately, or during the next maintenance window.
+                          Default- the one set at cluster level via property `apply_immediately`
+
+monitoring_granularity  : (Optional) The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. 
+
+preferred_maintenance_window: (Optional) The window to perform maintenance in.
+                              Default - The one set at cluster lebel via property `preferred_maintenance_window`
+performance_insights_enabled: (Optional) Specifies whether Performance Insights is enabled or not.
+                              Default - The one set via instances' common property `performance_insights_enabled`
+performance_insights_retention_period: (Optional) Amount of time in days to retain Performance Insights data.
+                                       Default - The one set via instances' common property `performance_insights_retention_period`
+
+copy_tags_to_snapshot   : (Optional) Copy all tags from DB instance to snapshots.
+                          Default - The one set at cluster lebel via property `copy_tags_to_snapshot`
+
+tags                    : (Optional) A map of tags to assign to the DB Instance.
+                          Default - {}
+EOF
+    type        = any
+    default     = []
+}
+
+variable "endpoints" {
+    description = <<EOF
+List of cluster endpoints map where each entry of the list may have following attributes 
+
+identifier      : (Required) The identifier to use for the new endpoint.
+type            : (Required) The type of the endpoint. One of: READER, ANY .
+static_members  : (Optional) List of DB instance identifiers that are part of the custom endpoint group.
+tags            : (Optional) A map of tags to assign to the endpoint. Default - {}
+EOF
+    default = []
 }

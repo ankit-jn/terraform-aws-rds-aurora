@@ -55,3 +55,24 @@ output "rds_monitoring_role" {
     value = (var.enable_enhanced_monitoring 
                 && var.create_monitoring_role) ? module.rds_monitoring_role[0].service_linked_roles[var.monitoring_role_name] : {}
 }
+
+output "instances" {
+    description = "RDS Aurora Cluster Instances"
+    value = { for key, value in aws_rds_cluster_instance.this: 
+                    key => {
+                            id = value.id
+                            arn = value.arn
+                            endpoint = value.endpoint
+                            writer = value.writer
+                        }}
+}
+
+output "endpoints" {
+    description = "RDS Aurora Cluster Endpints"
+    value = { for key, value in aws_rds_cluster_endpoint.this: 
+                    key => {
+                            id = value.id
+                            arn = value.arn
+                            endpoint = value.endpoint
+                        }}
+}
