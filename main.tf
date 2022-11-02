@@ -101,7 +101,6 @@ resource aws_rds_cluster "this" {
     dynamic "scaling_configuration" {
         for_each = (var.engine_mode == "serverless" 
                       && length(keys(var.scaling_configuration)) > 0) ? [1] : []
-
         content {
           auto_pause               = lookup(var.scaling_configuration, "auto_pause", true)
           max_capacity             = lookup(var.scaling_configuration, "max_capacity", 16)
@@ -112,10 +111,9 @@ resource aws_rds_cluster "this" {
     }
 
     ## Scaling Configurations for Aurora Provisioned
-    dynamic "scaling_configuration" {
+    dynamic "serverlessv2_scaling_configuration" {
         for_each = (var.engine_mode == "provisioned" 
                       && length(keys(var.serverlessv2_scaling_configuration)) > 0) ? [1] : []
-
         content {
           max_capacity             = lookup(var.serverlessv2_scaling_configuration, "max_capacity", 16)
           min_capacity             = lookup(var.serverlessv2_scaling_configuration, "min_capacity", 1)
