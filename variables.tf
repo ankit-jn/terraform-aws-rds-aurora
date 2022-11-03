@@ -413,7 +413,7 @@ variable "create_db_cluster_parameter_group" {
 
 variable "db_cluster_parameter_group" {
   description = <<EOF
-The name of the DB cluster parameter group
+The configuration map of the DB cluster parameter group
 
 name: (Required) The name of the DB cluster parameter group.
 family: (Required) The family of the DB cluster parameter group
@@ -427,7 +427,7 @@ EOF
 
 variable "db_cluster_parameter_group_parameters" {
   description = <<EOF
-A list of DB cluster parameters to apply. Note that parameters may differ from a family to an other
+A list of DB cluster parameter group parameters map to apply. Note that parameters may differ from a family to an other
 
 Each map should have the following 3 properties:
 name: (Required) The name of the DB parameter.
@@ -451,7 +451,7 @@ variable "create_db_parameter_group" {
 
 variable "db_parameter_group" {
   description = <<EOF
-The name of the DB instance parameter group
+The configuration map of the DB instance parameter group
 
 name: (Required) The name of the DB parameter group.
 family: (Required) The family of the DB parameter group
@@ -465,7 +465,7 @@ EOF
 
 variable "db_parameter_group_parameters" {
   description = <<EOF
-A list of DB parameters to apply. Note that parameters may differ from a family to an other
+A list of DB parameters map to apply. Note that parameters may differ from a family to an other
 
 Each map should have the following 3 properties:
 name: (Required) The name of the DB parameter.
@@ -584,7 +584,7 @@ variable "create_monitoring_role" {
 }
 
 variable "monitoring_role_name" {
-    description = "Flag to decide if enhanced monitoring should be enabled"
+    description = "RDS Monitoring Role Name"
     type        = string
     default     = "rds-monitoring-role"
 }
@@ -624,7 +624,7 @@ instance_class          : (Required) The instance class to use.
 
 availability_zone       : (Optional) The EC2 Availability Zone that the DB instance is created in.
 publicly_accessible     : (Optional) Flag to control if instance is publicly accessible.
-                          Default - The one set via instances' common property `monitoring_granularity`
+                          Default - The one set via instances' common property `publicly_accessible`
 promotion_tier          : (Optional) Failover Priority setting on instance level.
                           Default - `0`
 
@@ -648,7 +648,6 @@ copy_tags_to_snapshot   : (Optional) Copy all tags from DB instance to snapshots
 tags                    : (Optional) A map of tags to assign to the DB Instance.
                           Default - {}
 EOF
-    type        = any
     default     = []
 }
 
@@ -660,7 +659,7 @@ identifier      : (Required) The identifier to use for the new endpoint.
 type            : (Required) The type of the endpoint. One of: READER, ANY .
 static_members  : (Optional) List of DB instance identifiers that are part of the custom endpoint group.
 excluded_members: (Optional) List of DB instance identifiers that are not part of the custom endpoint group.
-tags            : (Optional) A map of tags to assign to the endpoint. Default - {}
+tags            : (Optional) A map of tags to assign to the custom endpoint group. Default - {}
 
 Note: Only one of `static_members` and `excluded_members` can be defined
 EOF
