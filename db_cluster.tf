@@ -29,6 +29,7 @@ resource aws_rds_cluster "this" {
     master_username     = var.primary_cluster ? var.master_username : null
     master_password     = var.primary_cluster ? local.master_password : null
     
+    ## Only applicable for Aurora (Global Cluster)
     enable_global_write_forwarding = var.enable_global_write_forwarding
     
     ## Instance configuration
@@ -51,11 +52,6 @@ resource aws_rds_cluster "this" {
     db_instance_parameter_group_name  = var.create_db_parameter_group ? aws_db_parameter_group.this[0].id : lookup(var.db_parameter_group, "name", null)
 
     enable_http_endpoint  = var.engine_mode == "serverless" ? var.enable_http_endpoint : null
-    
-    ## Storage
-    storage_type          = var.storage_type
-    allocated_storage     = var.allocated_storage
-    iops                  = var.iops
     
     ## Used in case of secondary cluster of global aurora cluster
     source_region         = var.source_region
@@ -107,8 +103,8 @@ resource aws_rds_cluster "this" {
         for_each = (var.engine_mode == "provisioned" 
                       && length(keys(var.serverlessv2_scaling_configuration)) > 0) ? [1] : []
         content {
-          max_capacity             = lookup(var.serverlessv2_scaling_configuration, "max_capacity", 16)
-          min_capacity             = lookup(var.serverlessv2_scaling_configuration, "min_capacity", 1)
+          max_capacity = lookup(var.serverlessv2_scaling_configuration, "max_capacity", 16)
+          min_capacity = lookup(var.serverlessv2_scaling_configuration, "min_capacity", 1)
         }
     }
 

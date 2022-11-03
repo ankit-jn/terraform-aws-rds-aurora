@@ -67,9 +67,6 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="iam_database_authentication_enabled"></a> [iam_database_authentication_enabled](#input\_iam\_database\_authentication\_enabled) | Specifies whether or mappings of AWS Identity and Access Management (IAM) accounts to database accounts is enabled | `bool` | `null` | no |  |
 | <a name="database_name"></a> [database_name](#input\_database_name) | Name for an automatically created database on cluster creation. | `string` |  | yes |  |
 | <a name="enable_http_endpoint"></a> [enable_http_endpoint](#input\_enable\_http\_endpoint) | Enable HTTP endpoint (data API) | `string` | `null` | no |  |
-| <a name="storage_type"></a> [storage_type](#input\_storage\_type) | Specifies the storage type to be associated with the DB cluster. | `string` | `null` | no |  |
-| <a name="allocated_storage"></a> [allocated_storage](#input\_allocated\_storage) | The amount of storage in gibibytes (GiB) to allocate to each DB instance in the Multi-AZ DB cluster. | `number` | `null` | no |  |
-| <a name="iops"></a> [iops](#input\_iops) | The amount of Provisioned IOPS to be initially allocated for each DB instance in the Multi-AZ DB cluster. | `number` | `null` | no |  |
 | <a name="source_region"></a> [source_region](#input\_source\_region) | The source region for an encrypted replica DB cluster. | `string` | `null` | no |  |
 | <a name="backup_retention_period"></a> [backup_retention_period](#input\_backup\_retention\_period) | The days to retain backups for. | `number` | `1` | no |  |
 | <a name="copy_tags_to_snapshot"></a> [copy_tags_to_snapshot](#input\_copy\_tags\_to\_snapshot) | Copy all tags from DB cluster to snapshots. | `bool` | `false` | no |  |

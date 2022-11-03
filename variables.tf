@@ -19,8 +19,8 @@ variable "engine" {
     default     = "aurora"
 
     validation {
-        condition = contains(["aurora", "aurora-mysql", "aurora-postgresql", "mysql", "postgres"], var.engine)
-        error_message = "The valid values for engine are `aurora`, `aurora-mysql`, `aurora-postgresql`, `mysql`, `postgres`." 
+        condition = contains(["aurora", "aurora-mysql", "aurora-postgresql"], var.engine)
+        error_message = "The valid values for engine are `aurora`, `aurora-mysql`, `aurora-postgresql`." 
     }
 }
 
@@ -219,29 +219,6 @@ variable "database_name" {
 variable "enable_http_endpoint" {
     description = "Enable HTTP endpoint (data API)"
     type        = bool
-    default     = null
-}
-
-variable "storage_type" {
-    description = "Specifies the storage type to be associated with the DB cluster."
-    type        = string
-    default     = null
-
-    validation {
-        condition = var.storage_type != null ? contains(["io1"], var.storage_type) : true
-        error_message = "Valid value for the `storage_type` is `io1`."
-    }
-}
-
-variable "allocated_storage" {
-    description = "The amount of storage in gibibytes (GiB) to allocate to each DB instance in the Multi-AZ DB cluster."
-    type        = number
-    default     = null
-}
-
-variable "iops" {
-    description = "The amount of Provisioned IOPS to be initially allocated for each DB instance in the Multi-AZ DB cluster."
-    type        = number
     default     = null
 }
 
