@@ -8,17 +8,44 @@ output "cluster_arn" {
     value = var.create_cluster ? aws_rds_cluster.this[0].arn : ""
 }
 
-output "sg_id" {
-    description = "The Security Group ID associated to RDS"
-    value = var.create_sg ? module.rds_security_group[0].security_group_id : ""
-}
-
 output "db_subnet_group" {
     description = "Database Subnet Group Details"
     value = var.create_db_subnet_group ? {
                                             id = aws_db_subnet_group.this[0].id
                                             arn = aws_db_subnet_group.this[0].arn
                                           } : {}
+}
+
+output "instances" {
+    description = "RDS Aurora Cluster Instances"
+    value = { for key, value in aws_rds_cluster_instance.this: 
+                    key => {
+                            id = value.id
+                            arn = value.arn
+                            endpoint = value.endpoint
+                            writer = value.writer
+                        }}
+}
+
+output "cluster_endpoint" {
+    description = "RDS Aurora Cluster Endpint"
+    value = var.create_cluster ? aws_rds_cluster.this[0].endpoint : ""
+}
+
+output "custom_endpoints" {
+    description = "RDS Aurora Cluster Custom Endpints"
+    value = { for key, value in aws_rds_cluster_endpoint.this: 
+                    key => {
+                            id = value.id
+                            arn = value.arn
+                            endpoint = value.endpoint
+                        }}
+}
+
+output "rds_monitoring_role" {
+    description = "IAM role created for RDS enhanced monitoring"
+    value = (var.enable_enhanced_monitoring 
+                && var.create_monitoring_role) ? module.rds_monitoring_role[0].service_linked_roles[var.monitoring_role_name] : {}
 }
 
 output "ssm_paramter_cluster_host" {
@@ -50,29 +77,7 @@ output "ssm_paramter_master_password" {
                     && var.ssm_master_password) ? aws_ssm_parameter.master_password[0].arn : ""
 }
 
-output "rds_monitoring_role" {
-    description = "IAM role created for RDS enhanced monitoring"
-    value = (var.enable_enhanced_monitoring 
-                && var.create_monitoring_role) ? module.rds_monitoring_role[0].service_linked_roles[var.monitoring_role_name] : {}
-}
-
-output "instances" {
-    description = "RDS Aurora Cluster Instances"
-    value = { for key, value in aws_rds_cluster_instance.this: 
-                    key => {
-                            id = value.id
-                            arn = value.arn
-                            endpoint = value.endpoint
-                            writer = value.writer
-                        }}
-}
-
-output "endpoints" {
-    description = "RDS Aurora Cluster Endpints"
-    value = { for key, value in aws_rds_cluster_endpoint.this: 
-                    key => {
-                            id = value.id
-                            arn = value.arn
-                            endpoint = value.endpoint
-                        }}
+output "sg_id" {
+    description = "The Security Group ID associated to RDS"
+    value = var.create_sg ? module.rds_security_group[0].security_group_id : ""
 }

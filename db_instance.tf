@@ -45,8 +45,9 @@ resource aws_rds_cluster_endpoint "this" {
     custom_endpoint_type        = each.value.type
     cluster_identifier          = aws_rds_cluster.this[0].id
 
-    static_members = flatten([for member in each.value.static_members: aws_rds_cluster_instance.this[member].id])
-    
+    static_members = can(each.value.static_members) ? flatten([for member in each.value.static_members : aws_rds_cluster_instance.this[member].id]) : null
+    excluded_members = can(each.value.excluded_members) ? flatten([for member in each.value.excluded_members : aws_rds_cluster_instance.this[member].id]) : null
+
     tags = merge({"Name" = each.key}, var.default_tags, var.cluster_tags, lookup(each.value, "tags", {}))
 
     depends_on = [
