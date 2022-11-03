@@ -183,7 +183,8 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="excluded_members"></a> [excluded_members](#input\_excluded\_members) | List of DB instance identifiers that are not part of the custom endpoint group. | `list(string)` | `null` | no |  |
 | <a name="tags"></a> [tags](#input\_tags) | A map of tags to assign to the custom endpoint. | `map(string)` | `{}` | no |  |
 
-#### sg_rules [ Ingress / Egress ]
+#### sg_rules
+[ Ingress / Egress ]
 
 - `cidr_blocks` Cannot be specified with `source_security_group_id` or `self`.
 - `ipv6_cidr_blocks` Cannot be specified with `source_security_group_id` or `self`.
