@@ -53,7 +53,6 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="password_length"></a> [password_length](#input\_password\_length) | Length of the password if `generate_password` is set true | `number` | `8` | no |  |
 | <a name="master_password"></a> [master_password](#input\_master\_password) | Password for master DB user. `generate_password will take preference over this property` | `string` | `null` | no |  |
 | <a name="enable_global_write_forwarding"></a> [enable_global_write_forwarding](#input\_enable\_global\_write\_forwarding) | Flag to decide if cluster should forward writes to an associated global cluster. Applied to secondary clusters to enable them to forward writes to an `aws_rds_global_cluster`'s primary cluster | `bool` | `null` | no |  |
-| <a name="db_cluster_instance_class"></a> [db_cluster_instance_class](#input\_db\_cluster\_instance\_class) | The compute and memory capacity of each DB instance in the Multi-AZ DB cluster | `string` | `null` | no |  |
 | <a name="availability_zones"></a> [availability_zones](#input\_availability\_zones) | List of EC2 Availability Zones for the DB cluster storage where DB cluster instances can be created | `list(string)` | `[]` | no |  |
 | <a name="db_port"></a> [db_port](#input\_db\_port) | The port on which the DB accepts connections. | `number` | `null` | no |  |
 | <a name="vpc_id"></a> [vpc_id](#input\_vpc\_id) | The ID of VPC that is used to define the virtual networking environment for this DB cluster. | `string` | `""` | no |  |
@@ -91,6 +90,18 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="db_parameter_group"></a> [db_parameter_group](#parameter\_group) | The configuration map of the DB instance parameter group | `map` | `{}` | no |  |
 | <a name="db_parameter_group_parameters"></a> [db_parameter_group_parameters](#parameter\_group\_parameters) | A list of DB parameters map to apply | `list(map(string))` | `[]` | no |  |
 
+#### Monitoring properties
+---
+| Name | Description | Type | Default | Required | Example|
+|:------|:------|:------|:------|:------:|:------|
+| <a name="performance_insights_enabled"></a> [performance_insights_enabled](#input\_performance\_insights\_enabled) | Specifies whether Performance Insights is enabled or not | `bool` | `false` | no |  |
+| <a name="performance_insights_kms_key"></a> [performance_insights_kms_key](#input\_performance\_insights\_kms\_key) | The reference of the KMS key to encrypt Performance Insights data. | `string` | `null` | no |  |
+| <a name="performance_insights_retention_period"></a> [performance_insights_retention_period](#input\_performance\_insights\_retention\_period) | Amount of time in days to retain Performance Insights data. Either 7 (7 days) or 731 (2 years) | `number` | `7` | no |  |
+| <a name="enable_enhanced_monitoring"></a> [enable_enhanced_monitoring](#input\_enable\_enhanced\_monitoring) | Flag to decide if enhanced monitoring should be enabled | `bool` | `false` | no |  |
+| <a name="monitoring_granularity"></a> [monitoring_granularity](#input\_monitoring\_granularity) | Monitoring Interval, in seconds, to apply on each DB instance | `number` | `0` | no |  |
+| <a name="create_monitoring_role"></a> [create_monitoring_role](#input\_create\_monitoring\_role) | Flag to decide if IAM role to be created for monitoring | `bool` | `false` | no |  |
+| <a name="monitoring_role_name"></a> [monitoring_role_name](#input\_monitoring\_role\_name) | RDS Monitoring Role Name | `string` | `"rds-monitoring-role"` | no |  |
+
 #### DB Instance specific properties
 ---
 | Name | Description | Type | Default | Required | Example|
@@ -99,24 +110,8 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="publicly_accessible"></a> [publicly_accessible](#input\_publicly\_accessible) | Flag to decide if instances are publicly accessible | `bool` | `false` | no |  |
 | <a name="auto_minor_version_upgrade"></a> [auto_minor_version_upgrade](#input\_auto\_minor\_version\_upgrade) | Enable to allow minor engine upgrades utomatically to the DB instance during the maintenance window. | `bool` | `true` | no |  |
 | <a name="ca_cert_identifier"></a> [ca_cert_identifier](#input\_ca\_cert\_identifier) | The identifier of the CA certificate for the DB instance. | `string` | `null` | no |  |
-| <a name="enable_enhanced_monitoring"></a> [enable_enhanced_monitoring](#input\_enable\_enhanced\_monitoring) | Flag to decide if enhanced monitoring should be enabled | `bool` | `false` | no |  |
-| <a name="monitoring_granularity"></a> [monitoring_granularity](#input\_monitoring\_granularity) | Monitoring Interval, in seconds, to apply on each DB instance | `number` | `0` | no |  |
-| <a name="create_monitoring_role"></a> [create_monitoring_role](#input\_create\_monitoring\_role) | Flag to decide if IAM role to be created for monitoring | `bool` | `false` | no |  |
-| <a name="monitoring_role_name"></a> [monitoring_role_name](#input\_monitoring\_role\_name) | RDS Monitoring Role Name | `string` | `"rds-monitoring-role"` | no |  |
-| <a name="performance_insights_enabled"></a> [performance_insights_enabled](#input\_performance\_insights\_enabled) | Specifies whether Performance Insights is enabled or not | `bool` | `false` | no |  |
-| <a name="performance_insights_kms_key"></a> [performance_insights_kms_key](#input\_performance\_insights\_kms\_key) | The reference of the KMS key to encrypt Performance Insights data. | `string` | `null` | no |  |
-| <a name="performance_insights_retention_period"></a> [performance_insights_retention_period](#input\_performance\_insights\_retention\_period) | Amount of time in days to retain Performance Insights data. Either 7 (7 days) or 731 (2 years) | `number` | `7` | no |  |
 | <a name="instances"></a> [instances](#instances) | List of cluster instances map | `list` | `[]` | no |  |
 | <a name="endpoints"></a> [endpoints](#endpoints) | List of cluster endpoints map | `list` | `[]` | no |  |
-
-#### Tags specific properties
----
-| Name | Description | Type | Default | Required |
-|:------|:------|:------|:------|:------:|
-| <a name="default_tags"></a> [default_tags](#input\_default\_tags) | A map of tags to assign to all the resources. | `map(string)` | `{}` | no |
-| <a name="cluster_tags"></a> [cluster_tags](#input\_cluster\_tags) | A map of tags to assign to the DB cluster. | `map(string)` | `{}` | no |
-| <a name="instance_tags"></a> [instance_tags](#input\_instance\_tags) | A map of tags to assign to all the DB Instance. | `map(string)` | `{}` | no |
-| <a name="monitoring_role_tags"></a> [monitoring_role_tags](#input\_monitoring\_role\_tags) | A map of tags to assign to the Monitoring IAM Role. | `map(string)` | `{}` | no |
 
 #### SSM Parameter specific properties
 ---
@@ -127,6 +122,15 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="ssm_database_name"></a> [ssm_database_name](#input\_ssm\_database\_name) | Flag to decide if the database_name should be stored as SSM parameter | `bool` | `true` | no |
 | <a name="ssm_master_username"></a> [ssm_master_username](#input\_ssm\_master\_username) | Flag to decide if the master_username should be stored as SSM parameter | `bool` | `true` | no |
 | <a name="ssm_master_password"></a> [ssm_master_password](#input\_ssm\_master\_password) | Flag to decide if the master_password should be stored as SSM parameter | `bool` | `true` | no |
+
+#### Tags specific properties
+---
+| Name | Description | Type | Default | Required |
+|:------|:------|:------|:------|:------:|
+| <a name="default_tags"></a> [default_tags](#input\_default\_tags) | A map of tags to assign to all the resources. | `map(string)` | `{}` | no |
+| <a name="cluster_tags"></a> [cluster_tags](#input\_cluster\_tags) | A map of tags to assign to the DB cluster. | `map(string)` | `{}` | no |
+| <a name="instance_tags"></a> [instance_tags](#input\_instance\_tags) | A map of tags to assign to all the DB Instance. | `map(string)` | `{}` | no |
+| <a name="monitoring_role_tags"></a> [monitoring_role_tags](#input\_monitoring\_role\_tags) | A map of tags to assign to the Monitoring IAM Role. | `map(string)` | `{}` | no |
 
 ## Nested Configuration Maps:  
 

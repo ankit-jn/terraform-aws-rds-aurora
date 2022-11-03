@@ -97,15 +97,6 @@ variable "enable_global_write_forwarding" {
 }
 
 #################################################
-## Instance configuration Properties
-#################################################
-variable "db_cluster_instance_class" {
-    description = "The compute and memory capacity of each DB instance in the Multi-AZ DB cluster"
-    type        = string
-    default     = null
-}
-
-#################################################
 ## Availability & durability Properties
 #################################################
 variable "availability_zones" {
@@ -452,95 +443,35 @@ EOF
   default     = []
 }
 
-
 #################################################
-## Tags
+## Monitoring properties
 #################################################
-variable "default_tags" {
-    description = "A map of tags to assign to all the resources."
-    type        = map(string)
-    default     = {}
+variable "performance_insights_enabled" {
+  description = "Specifies whether Performance Insights is enabled or not"
+  type        = bool
+  default     = false
 }
 
-variable "cluster_tags" {
-    description = "A map of tags to assign to the DB cluster."
-    type        = map(string)
-    default     = {}
-}
+variable "performance_insights_kms_key" {
+    description = <<EOF
+The reference of the KMS key to encrypt Performance Insights data.
+key Reference could be either of this format:
 
-variable "instance_tags" {
-    description = "A map of tags to assign to all the DB Instance."
-    type        = map(string)
-    default     = {}
-}
-
-variable "monitoring_role_tags" {
-    description = "A map of tags to assign to the Monitoring IAM Role."
-    type        = map(string)
-    default     = {}
-}
-
-#################################################
-## SSM Paramteres
-#################################################
-variable "ssm_parameter_prefix" {
-    description = "Prefix for SSM paramteres"
-    type = string
-    default = ""
-}
-
-variable "ssm_cluster_host" {
-    description = "Flag to decide if the cluster_host should be stored as SSM parameter"
-    type = bool
-    default = true
-}
-
-variable "ssm_database_name" {
-    description = "Flag to decide if the database_name should be stored as SSM parameter"
-    type = bool
-    default = true
-}
-
-variable "ssm_master_username" {
-    description = "Flag to decide if the master_username should be stored as SSM parameter"
-    type = bool
-    default = true
-}
-
-variable "ssm_master_password" {
-    description = "Flag to decide if the master_password should be stored as SSM parameter"
-    type = bool
-    default = true
-}
-
-#################################################
-## DB Instances
-#################################################
-variable "instance_class" {
-    description = "The compute and memory capacity of each DB instance in the Multi-AZ DB cluster"
+- 1234abcd-12ab-34cd-56ef-1234567890ab
+- arn:aws:kms:<region>:<account no>:key/1234abcd-12ab-34cd-56ef-1234567890ab
+- alias/my-key
+- arn:aws:kms:<region>:<account no>:alias/my-key
+EOF
     type        = string
     default     = null
 }
 
-variable "publicly_accessible" {
-    description = "Flag to decide if instances are publicly accessible"
-    type        = bool
-    default     = false
+variable "performance_insights_retention_period" {
+  description = "Amount of time in days to retain Performance Insights data. Either 7 (7 days) or 731 (2 years)"
+  type        = number
+  default     = 7
 }
 
-variable "auto_minor_version_upgrade" {
-    description = "Enable to allow minor engine upgrades utomatically to the DB instance during the maintenance window."
-    type        = bool
-    default     = true
-}
-
-variable "ca_cert_identifier" {
-    description = "The identifier of the CA certificate for the DB instance."
-    type        = string
-    default     = null 
-}
-
-## Monitoring Properties
 variable "enable_enhanced_monitoring" {
     description = "Flag to decide if enhanced monitoring should be enabled"
     type        = bool
@@ -570,30 +501,31 @@ variable "monitoring_role_name" {
     default     = "rds-monitoring-role"
 }
 
-variable "performance_insights_enabled" {
-  description = "Specifies whether Performance Insights is enabled or not"
-  type        = bool
-  default     = false
-}
-
-variable "performance_insights_kms_key" {
-    description = <<EOF
-The reference of the KMS key to encrypt Performance Insights data.
-key Reference could be either of this format:
-
-- 1234abcd-12ab-34cd-56ef-1234567890ab
-- arn:aws:kms:<region>:<account no>:key/1234abcd-12ab-34cd-56ef-1234567890ab
-- alias/my-key
-- arn:aws:kms:<region>:<account no>:alias/my-key
-EOF
+#################################################
+## DB Instances
+#################################################
+variable "instance_class" {
+    description = "The compute and memory capacity of each DB instance in the Multi-AZ DB cluster"
     type        = string
     default     = null
 }
 
-variable "performance_insights_retention_period" {
-  description = "Amount of time in days to retain Performance Insights data. Either 7 (7 days) or 731 (2 years)"
-  type        = number
-  default     = 7
+variable "publicly_accessible" {
+    description = "Flag to decide if instances are publicly accessible"
+    type        = bool
+    default     = false
+}
+
+variable "auto_minor_version_upgrade" {
+    description = "Enable to allow minor engine upgrades utomatically to the DB instance during the maintenance window."
+    type        = bool
+    default     = true
+}
+
+variable "ca_cert_identifier" {
+    description = "The identifier of the CA certificate for the DB instance."
+    type        = string
+    default     = null 
 }
 
 variable "instances" {
@@ -645,4 +577,64 @@ tags            : (Optional) A map of tags to assign to the custom endpoint grou
 Note: Only one of `static_members` and `excluded_members` can be defined
 EOF
     default = []
+}
+
+#################################################
+## SSM Paramteres
+#################################################
+variable "ssm_parameter_prefix" {
+    description = "Prefix for SSM paramteres"
+    type = string
+    default = ""
+}
+
+variable "ssm_cluster_host" {
+    description = "Flag to decide if the cluster_host should be stored as SSM parameter"
+    type = bool
+    default = true
+}
+
+variable "ssm_database_name" {
+    description = "Flag to decide if the database_name should be stored as SSM parameter"
+    type = bool
+    default = true
+}
+
+variable "ssm_master_username" {
+    description = "Flag to decide if the master_username should be stored as SSM parameter"
+    type = bool
+    default = true
+}
+
+variable "ssm_master_password" {
+    description = "Flag to decide if the master_password should be stored as SSM parameter"
+    type = bool
+    default = true
+}
+
+#################################################
+## Tags
+#################################################
+variable "default_tags" {
+    description = "A map of tags to assign to all the resources."
+    type        = map(string)
+    default     = {}
+}
+
+variable "cluster_tags" {
+    description = "A map of tags to assign to the DB cluster."
+    type        = map(string)
+    default     = {}
+}
+
+variable "instance_tags" {
+    description = "A map of tags to assign to all the DB Instance."
+    type        = map(string)
+    default     = {}
+}
+
+variable "monitoring_role_tags" {
+    description = "A map of tags to assign to the Monitoring IAM Role."
+    type        = map(string)
+    default     = {}
 }

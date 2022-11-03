@@ -31,9 +31,6 @@ resource aws_rds_cluster "this" {
     
     ## Only applicable for Aurora (Global Cluster)
     enable_global_write_forwarding = var.enable_global_write_forwarding
-    
-    ## Instance configuration
-    db_cluster_instance_class = var.db_cluster_instance_class
 
     ## Availability & durability
     availability_zones  = var.availability_zones
