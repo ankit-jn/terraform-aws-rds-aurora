@@ -171,7 +171,7 @@ variable "sg_name" {
 variable "sg_rules" {
     description = <<EOF
 
-(Optional) Configuration List for Security Group Rules of Security Group:
+(Optional) Configuration Map for Security Group Rules of Security Group:
 It is a map of Rule Pairs where,
 Key of the map is Rule Type and Value of the map would be an array of Security Rules Map 
 There could be 2 Rule Types [Keys] : 'ingress', 'egress'
@@ -214,18 +214,6 @@ variable "iam_database_authentication_enabled" {
 variable "database_name" {
     description = "Name for an automatically created database on cluster creation."
     type        = string
-}
-
-variable "db_cluster_parameter_group_name" {
-    description = "A cluster parameter group to associate with the cluster."
-    type        = string
-    default     = null
-}
-
-variable "db_instance_parameter_group_name" {
-    description = "Instance parameter group to associate with all instances of the DB cluster."
-    type        = string
-    default     = null
 }
 
 variable "enable_http_endpoint" {
@@ -315,7 +303,7 @@ variable "storage_encrypted" {
 
 variable "kms_key" {
     description = <<EOF
-The reference of the KMS key to use.
+The reference of the KMS key to use for encryption.
 key Reference could be either of this format:
 
 - 1234abcd-12ab-34cd-56ef-1234567890ab
@@ -375,7 +363,7 @@ variable "apply_immediately" {
 ## Deletion Protection Properties
 #################################################
 variable "deletion_protection" {
-    description = "If the DB instance should have deletion protection enabled."
+    description = "Flag to decide if the DB instance should have deletion protection enabled."
     type        = bool
     default     = false
 }

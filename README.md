@@ -47,7 +47,44 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="create_cluster"></a> [create_cluster](#input\_create\_cluster) | Flag to decide if cluster should be provisioned | `bool` | `true` | no |  |
 | <a name="primary_cluster"></a> [primary_cluster](#input\_primary\_cluster) | Is the cluster Primary? | `bool` | `true` | no |  |
 | <a name="cluster_name"></a> [cluster_name](#input\_cluster\_name) | The cluster identifier. Required when `create_cluster` is set `true` | `string` | `null` | no |  |
-| <a name="master_username"></a> [master_username](#input\_master_username) | Username for the master DB user. | `string` | `"admin"` | no |  |
+| <a name="master_username"></a> [master_username](#input\_master\_username) | Username for the master DB user. | `string` | `"admin"` | no |  |
+| <a name="generate_password"></a> [generate_password](#input\_generate\_password) | Flag to decide if random password should be generated for RDS cluster | `bool` | `true` | no |  |
+| <a name="password_length"></a> [password_length](#input\_password\_length) | Length of the password if `generate_password` is set true | `number` | `8` | no |  |
+| <a name="master_password"></a> [master_password](#input\_master\_password) | Password for master DB user. `generate_password will take preference over this property` | `string` | `null` | no |  |
+| <a name="enable_global_write_forwarding"></a> [enable_global_write_forwarding](#input\_enable\_global\_write\_forwarding) | Flag to decide if cluster should forward writes to an associated global cluster. Applied to secondary clusters to enable them to forward writes to 
+  an `aws_rds_global_cluster`'s primary cluster | `bool` | `null` | no |  |
+| <a name="db_cluster_instance_class"></a> [db_cluster_instance_class](#input\_db\_cluster\_instance\_class) | The compute and memory capacity of each DB instance in the Multi-AZ DB cluster | `string` | `null` | no |  |
+| <a name="availability_zones"></a> [availability_zones](#input\_availability\_zones) | List of EC2 Availability Zones for the DB cluster storage where DB cluster instances can be created | `list(string)` | `[]` | no |  |
+| <a name="db_port"></a> [db_port](#input\_db\_port) | The port on which the DB accepts connections. | `number` | `null` | no |  |
+| <a name="vpc_id"></a> [vpc_id](#input\_vpc\_id) | The ID of VPC that is used to define the virtual networking environment for this DB cluster. | `string` | `""` | no |  |
+| <a name="create_db_subnet_group"></a> [create_db_subnet_group](#input\_create\_db\_subnet\_group) | Flag to decide if DB subnet group should be created | `bool` | `true` | no |  |
+| <a name="db_subnet_group_name"></a> [db_subnet_group_name](#input\_db\_subnet\_group\_name) | The name of the subnet group name | `string` | `null` | no |  |
+| <a name="subnets"></a> [subnets](#input\_subnets) | The list of subnet IDs used by database subnet group | `list(string)` | `[]` | no |  |
+| <a name="additional_sg"></a> [additional_sg](#input\_additional\_sg) | List of Existing Security Group IDs associated with Database. | `list(string)` | `[]` | no |  |
+| <a name="create_sg"></a> [create_sg](#input\_create\_sg) | Flag to decide to create Security Group for Database | `bool` | `false` | no |  |
+| <a name="sg_name"></a> [sg_name](#input\_sg\_name) | The name of the Security group | `string` | `""` | no |  |
+| <a name="sg_rules"></a> [sg_rules](#input\_sg\_rules) | Configuration map for Security Group Rules | `map` | `{}` | no |  |
+| <a name="iam_database_authentication_enabled"></a> [iam_database_authentication_enabled](#input\_iam\_database\_authentication\_enabled) | Specifies whether or mappings of AWS Identity and Access Management (IAM) accounts to database accounts is enabled | `bool` | `null` | no |  |
+| <a name="database_name"></a> [database_name](#input\_database_name) | Name for an automatically created database on cluster creation. | `string` |  | yes |  |
+| <a name="enable_http_endpoint"></a> [enable_http_endpoint](#input\_enable\_http\_endpoint) | Enable HTTP endpoint (data API) | `string` | `null` | no |  |
+| <a name="storage_type"></a> [storage_type](#input\_storage\_type) | Specifies the storage type to be associated with the DB cluster. | `string` | `null` | no |  |
+| <a name="allocated_storage"></a> [allocated_storage](#input\_allocated\_storage) | The amount of storage in gibibytes (GiB) to allocate to each DB instance in the Multi-AZ DB cluster. | `number` | `null` | no |  |
+| <a name="iops"></a> [iops](#input\_iops) | The amount of Provisioned IOPS to be initially allocated for each DB instance in the Multi-AZ DB cluster. | `number` | `null` | no |  |
+| <a name="source_region"></a> [source_region](#input\_source\_region) | The source region for an encrypted replica DB cluster. | `string` | `null` | no |  |
+| <a name="backup_retention_period"></a> [backup_retention_period](#input\_backup\_retention\_period) | The days to retain backups for. | `number` | `1` | no |  |
+| <a name="copy_tags_to_snapshot"></a> [copy_tags_to_snapshot](#input\_copy\_tags\_to\_snapshot) | Copy all tags from DB cluster to snapshots. | `bool` | `false` | no |  |
+| <a name="preferred_backup_window"></a> [preferred_backup_window](#input\_preferred\_backup\_window) | The daily time range (in UTC) during which automated backups are created if automated backups are enabled using the backup_retention_period. | `string` | `null` | no |  |
+| <a name="snapshot_identifier"></a> [snapshot_identifier](#input\_snapshot\_identifier) | Specifies whether or not to create this cluster from a snapshot. | `string` | `null` | no |  |
+| <a name="skip_final_snapshot"></a> [skip_final_snapshot](#input\_skip\_final\_snapshot) | Determines whether a final DB snapshot is created before the DB cluster is deleted. | `bool` | `false` | no |  |
+| <a name="final_snapshot_identifier"></a> [final_snapshot_identifier](#input\_final\_snapshot\_identifier) | The name of your final DB snapshot when this DB cluster is deleted. | `string` | `null` | no |  |
+| <a name="storage_encrypted"></a> [storage_encrypted](#input\_storage\_encrypted) | Specifies whether the DB cluster is encrypted. | `bool` | `null` | no |  |
+| <a name="kms_key"></a> [kms_key](#input\_kms\_key) | The reference of the KMS key to use for encryption | `string` | `null` | no |  |
+| <a name="backtrack_window"></a> [backtrack_window](#input\_backtrack\_window) | The target backtrack window, in seconds. | `number` | `0` | no |  |
+| <a name="enabled_cloudwatch_logs_exports"></a> [enabled_cloudwatch_logs_exports](#input\_enabled\_cloudwatch\_logs\_exports) | Set of log types to export to cloudwatch. | `set(string)` | `[]` | no |  |
+| <a name="allow_major_version_upgrade"></a> [allow_major_version_upgrade](#input\_allow\_major\_version\_upgrade) | Enable to allow major engine version upgrades when changing engine versions. | `bool` | `false` | no |  |
+| <a name="preferred_maintenance_window"></a> [preferred_maintenance_window](#input\_preferred\_maintenance\_window) | The weekly time range during which system maintenance can occur, in (UTC). | `string` | `null` | no |  |
+| <a name="apply_immediately"></a> [apply_immediately](#input\_apply\_immediately) | Specifies whether any cluster modifications are applied immediately, or during the next maintenance window. | `bool` | `false` | no |  |
+| <a name="deletion_protection"></a> [deletion_protection](#input\_deletion\_protection) | Flag to decide if the DB instance should have deletion protection enabled. | `bool` | `false` | no |  |
 
 ## Outputs
 
