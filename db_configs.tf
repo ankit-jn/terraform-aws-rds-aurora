@@ -13,7 +13,7 @@ resource aws_rds_cluster_parameter_group "this" {
     count = var.create_cluster && var.create_db_cluster_parameter_group ? 1 : 0
 
     name        = var.db_cluster_parameter_group.name
-    description = coalesce(var.db_cluster_parameter_group.description, var.db_cluster_parameter_group.name)
+    description = lookup(var.db_cluster_parameter_group, "description", var.db_cluster_parameter_group.name)
     family      = var.db_cluster_parameter_group.family
 
     dynamic "parameter" {
@@ -34,7 +34,7 @@ resource aws_db_parameter_group "this" {
     count = var.create_cluster && var.create_db_parameter_group ? 1 : 0
 
     name        = var.db_parameter_group.name
-    description = coalesce(var.db_parameter_group.description, var.db_parameter_group.name)
+    description = lookup(var.db_parameter_group, "description", var.db_parameter_group.name)
     family      = var.db_parameter_group.family
 
     dynamic "parameter" {

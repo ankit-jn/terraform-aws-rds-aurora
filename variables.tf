@@ -421,7 +421,6 @@ description: (Optional) The description of the DB cluster parameter group.
 tags: (Optional) A map of tags to assign to the resource.
 
 EOF
-  type        = map
   default     = {}
 }
 
@@ -459,7 +458,6 @@ description: (Optional) The description of the DB parameter group.
 tags: (Optional) A map of tags to assign to the resource.
 
 EOF
-  type        = map
   default     = {}
 }
 
