@@ -37,6 +37,11 @@ output "cluster_endpoint" {
     value = var.create_cluster ? aws_rds_cluster.this[0].endpoint : ""
 }
 
+output "cluster_reader_endpoint" {
+    description = "RDS Aurora Cluster Read only Endpint; automatically load-balanced across replicas"
+    value = var.create_cluster ? aws_rds_cluster.this[0].reader_endpoint : ""
+}
+
 output "custom_endpoints" {
     description = "RDS Aurora Cluster Custom Endpints"
     value = { for key, value in aws_rds_cluster_endpoint.this: 
@@ -50,7 +55,7 @@ output "custom_endpoints" {
 output "rds_monitoring_role" {
     description = "IAM role created for RDS enhanced monitoring"
     value = (var.enable_enhanced_monitoring 
-                && var.create_monitoring_role) ? module.rds_monitoring_role[0].service_linked_roles[var.monitoring_role_name] : {}
+                && var.create_monitoring_role) ? module.rds_monitoring_role[0].service_linked_roles[var.monitoring_role_name] : null
 }
 
 output "ssm_paramter_cluster_host" {

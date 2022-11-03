@@ -14,7 +14,7 @@ module "rds_security_group" {
     count = var.create_sg ? 1 : 0
 
     vpc_id = var.vpc_id
-    name = var.sg_name
+    name = local.sg_name
 
     ingress_rules = local.sg_ingress_rules
     egress_rules  = local.sg_egress_rules

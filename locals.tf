@@ -1,5 +1,7 @@
 locals {
     master_password = (var.primary_cluster && var.generate_password) ? random_string.master_password[0].result : var.master_password
+    
+    sg_name = coalesce(var.sg_name, format("%s-sg", var.cluster_name))
     sg_ingress_rules = flatten([ for rule_key, rule in var.sg_rules :  rule if rule_key == "ingress" ])
     sg_egress_rules = flatten([ for rule_key, rule in var.sg_rules :  rule if rule_key == "egress" ])
 

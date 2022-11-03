@@ -18,6 +18,8 @@ resource aws_rds_cluster_instance "this" {
     db_subnet_group_name    = var.create_db_subnet_group ? aws_db_subnet_group.this[0].name : coalesce(var.db_subnet_group_name, "default")
     db_parameter_group_name = var.create_db_parameter_group ? aws_db_parameter_group.this[0].id : lookup(var.db_parameter_group, "name", null)
 
+    ca_cert_identifier = var.ca_cert_identifier
+
     auto_minor_version_upgrade  = lookup(each.value, "auto_minor_version_upgrade", var.auto_minor_version_upgrade)
     apply_immediately           = lookup(each.value, "apply_immediately", var.apply_immediately)
 
@@ -26,7 +28,7 @@ resource aws_rds_cluster_instance "this" {
 
     performance_insights_enabled          = lookup(each.value, "performance_insights_enabled", var.performance_insights_enabled)
     performance_insights_kms_key_id       = (var.performance_insights_kms_key != null) ? data.aws_kms_key.performance_insights[0].arn : null
-    performance_insights_retention_period = lookup(each.value, "performance_insights_retention_period", var.performance_insights_retention_period)
+    performance_insights_retention_period = lookup(each.value, "performance_insights_enabled", var.performance_insights_enabled) ? lookup(each.value, "performance_insights_retention_period", var.performance_insights_retention_period) : null
 
     preferred_maintenance_window = lookup(each.value, "preferred_maintenance_window", var.preferred_maintenance_window)
 
