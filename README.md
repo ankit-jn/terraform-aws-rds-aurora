@@ -113,22 +113,22 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 
 #### Tags specific properties
 ---
-| Name | Description | Type | Default | Required | Example|
-|:------|:------|:------|:------|:------:|:------|
-| <a name="default_tags"></a> [default_tags](#input\_default\_tags) | A map of tags to assign to all the resources. | `map(string)` | `{}` | no |  |
-| <a name="cluster_tags"></a> [cluster_tags](#input\_cluster\_tags) | A map of tags to assign to the DB cluster. | `map(string)` | `{}` | no |  |
-| <a name="instance_tags"></a> [instance_tags](#input\_instance\_tags) | A map of tags to assign to all the DB Instance. | `map(string)` | `{}` | no |  |
-| <a name="monitoring_role_tags"></a> [monitoring_role_tags](#input\_monitoring\_role\_tags) | A map of tags to assign to the Monitoring IAM Role. | `map(string)` | `{}` | no |  |
+| Name | Description | Type | Default | Required |
+|:------|:------|:------|:------|:------:|
+| <a name="default_tags"></a> [default_tags](#input\_default\_tags) | A map of tags to assign to all the resources. | `map(string)` | `{}` | no |
+| <a name="cluster_tags"></a> [cluster_tags](#input\_cluster\_tags) | A map of tags to assign to the DB cluster. | `map(string)` | `{}` | no |
+| <a name="instance_tags"></a> [instance_tags](#input\_instance\_tags) | A map of tags to assign to all the DB Instance. | `map(string)` | `{}` | no |
+| <a name="monitoring_role_tags"></a> [monitoring_role_tags](#input\_monitoring\_role\_tags) | A map of tags to assign to the Monitoring IAM Role. | `map(string)` | `{}` | no |
 
 #### SSM Parameter specific properties
 ---
-| Name | Description | Type | Default | Required | Example|
-|:------|:------|:------|:------|:------:|:------|
-| <a name="ssm_parameter_prefix"></a> [ssm_parameter_prefix](#input\_ssm\_parameter\_prefix) | Prefix for SSM paramteres | `string` | `""` | no |  |
-| <a name="ssm_cluster_host"></a> [ssm_cluster_host](#input\_ssm\_cluster\_host) | Flag to decide if the cluster_host should be stored as SSM parameter | `bool` | `true` | no |  |
-| <a name="ssm_database_name"></a> [ssm_database_name](#input\_ssm\_database\_name) | Flag to decide if the database_name should be stored as SSM parameter | `bool` | `true` | no |  |
-| <a name="ssm_master_username"></a> [ssm_master_username](#input\_ssm\_master\_username) | Flag to decide if the master_username should be stored as SSM parameter | `bool` | `true` | no |  |
-| <a name="ssm_master_password"></a> [ssm_master_password](#input\_ssm\_master\_password) | Flag to decide if the master_password should be stored as SSM parameter | `bool` | `true` | no |  |
+| Name | Description | Type | Default | Required |
+|:------|:------|:------|:------|:------:|
+| <a name="ssm_parameter_prefix"></a> [ssm_parameter_prefix](#input\_ssm\_parameter\_prefix) | Prefix for SSM paramteres | `string` | `""` | no |
+| <a name="ssm_cluster_host"></a> [ssm_cluster_host](#input\_ssm\_cluster\_host) | Flag to decide if the cluster_host should be stored as SSM parameter | `bool` | `true` | no |
+| <a name="ssm_database_name"></a> [ssm_database_name](#input\_ssm\_database\_name) | Flag to decide if the database_name should be stored as SSM parameter | `bool` | `true` | no |
+| <a name="ssm_master_username"></a> [ssm_master_username](#input\_ssm\_master\_username) | Flag to decide if the master_username should be stored as SSM parameter | `bool` | `true` | no |
+| <a name="ssm_master_password"></a> [ssm_master_password](#input\_ssm\_master\_password) | Flag to decide if the master_password should be stored as SSM parameter | `bool` | `true` | no |
 
 ## Nested Configuration Maps:  
 
