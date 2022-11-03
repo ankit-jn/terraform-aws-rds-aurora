@@ -45,7 +45,7 @@ variable "engine_mode" {
 ## Cluster Settings Properties
 #################################################
 variable "create_cluster" {
-    description = "Is the cluster Primary?"
+    description = "Flag to decide if cluster should be provisioned"
     type        = bool
     default     = true
 }

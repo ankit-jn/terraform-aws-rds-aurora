@@ -1,6 +1,6 @@
 ## Database Subnet Group
 resource aws_db_subnet_group "this" {
-    count = var.create_db_subnet_group ? 1 : 0
+    count = var.create_cluster && var.create_db_subnet_group ? 1 : 0
     
     name        = coalesce(var.db_subnet_group_name, format("%s-default", var.cluster_name))
     description = format("DB subnet group for DB cluster - %s", var.cluster_name)

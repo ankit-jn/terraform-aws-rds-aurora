@@ -8,9 +8,14 @@ output "cluster_arn" {
     value = var.create_cluster ? aws_rds_cluster.this[0].arn : ""
 }
 
+output "port" {
+    description = "Database port"
+    value = var.create_cluster ? aws_rds_cluster.this[0].port : ""
+}
+
 output "db_subnet_group" {
     description = "Database Subnet Group Details"
-    value = var.create_db_subnet_group ? {
+    value = var.create_cluster && var.create_db_subnet_group ? {
                                             id = aws_db_subnet_group.this[0].id
                                             arn = aws_db_subnet_group.this[0].arn
                                           } : {}
@@ -49,14 +54,14 @@ output "rds_monitoring_role" {
 }
 
 output "ssm_paramter_cluster_host" {
-    description = "THE SSM Parameter ARN for cluster Host"
+    description = "The SSM Parameter ARN for cluster Host"
     value = (var.create_cluster 
                     && var.primary_cluster 
                     && var.ssm_cluster_host) ? aws_ssm_parameter.cluster_host[0].arn : ""
 }
 
 output "ssm_paramter_database_name" {
-    description = "THE SSM Parameter ARN for Database name"
+    description = "The SSM Parameter ARN for Database name"
     value = (var.create_cluster 
                     && var.primary_cluster 
                     && var.ssm_database_name) ? aws_ssm_parameter.database_name[0].arn : ""
@@ -64,14 +69,14 @@ output "ssm_paramter_database_name" {
 
 
 output "ssm_paramter_master_username" {
-    description = "THE SSM Parameter ARN for Master User Name"
+    description = "The SSM Parameter ARN for Master User Name"
     value = (var.create_cluster 
                     && var.primary_cluster 
                     && var.ssm_master_username) ? aws_ssm_parameter.master_username[0].arn : ""
 }
 
 output "ssm_paramter_master_password" {
-    description = "THE SSM Parameter ARN for Master password"
+    description = "The SSM Parameter ARN for Master password"
     value = (var.create_cluster 
                     && var.primary_cluster 
                     && var.ssm_master_password) ? aws_ssm_parameter.master_password[0].arn : ""
