@@ -51,8 +51,7 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="generate_password"></a> [generate_password](#input\_generate\_password) | Flag to decide if random password should be generated for RDS cluster | `bool` | `true` | no |  |
 | <a name="password_length"></a> [password_length](#input\_password\_length) | Length of the password if `generate_password` is set true | `number` | `8` | no |  |
 | <a name="master_password"></a> [master_password](#input\_master\_password) | Password for master DB user. `generate_password will take preference over this property` | `string` | `null` | no |  |
-| <a name="enable_global_write_forwarding"></a> [enable_global_write_forwarding](#input\_enable\_global\_write\_forwarding) | Flag to decide if cluster should forward writes to an associated global cluster. Applied to secondary clusters to enable them to forward writes to 
-  an `aws_rds_global_cluster`'s primary cluster | `bool` | `null` | no |  |
+| <a name="enable_global_write_forwarding"></a> [enable_global_write_forwarding](#input\_enable\_global\_write\_forwarding) | Flag to decide if cluster should forward writes to an associated global cluster. Applied to secondary clusters to enable them to forward writes to an `aws_rds_global_cluster`'s primary cluster | `bool` | `null` | no |  |
 | <a name="db_cluster_instance_class"></a> [db_cluster_instance_class](#input\_db\_cluster\_instance\_class) | The compute and memory capacity of each DB instance in the Multi-AZ DB cluster | `string` | `null` | no |  |
 | <a name="availability_zones"></a> [availability_zones](#input\_availability\_zones) | List of EC2 Availability Zones for the DB cluster storage where DB cluster instances can be created | `list(string)` | `[]` | no |  |
 | <a name="db_port"></a> [db_port](#input\_db\_port) | The port on which the DB accepts connections. | `number` | `null` | no |  |
