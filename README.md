@@ -90,17 +90,17 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="db_parameter_group"></a> [db_parameter_group](#parameter\_group) | The configuration map of the DB instance parameter group | `map` | `{}` | no |  |
 | <a name="db_parameter_group_parameters"></a> [db_parameter_group_parameters](#parameter\_group\_parameters) | A list of DB parameters map to apply | `list(map(string))` | `[]` | no |  |
 
-#### Monitoring properties
+#### Monitoring Properties
 ---
-| Name | Description | Type | Default | Required | Example|
-|:------|:------|:------|:------|:------:|:------|
-| <a name="performance_insights_enabled"></a> [performance_insights_enabled](#input\_performance\_insights\_enabled) | Specifies whether Performance Insights is enabled or not | `bool` | `false` | no |  |
-| <a name="performance_insights_kms_key"></a> [performance_insights_kms_key](#input\_performance\_insights\_kms\_key) | The reference of the KMS key to encrypt Performance Insights data. | `string` | `null` | no |  |
-| <a name="performance_insights_retention_period"></a> [performance_insights_retention_period](#input\_performance\_insights\_retention\_period) | Amount of time in days to retain Performance Insights data. Either 7 (7 days) or 731 (2 years) | `number` | `7` | no |  |
-| <a name="enable_enhanced_monitoring"></a> [enable_enhanced_monitoring](#input\_enable\_enhanced\_monitoring) | Flag to decide if enhanced monitoring should be enabled | `bool` | `false` | no |  |
-| <a name="monitoring_granularity"></a> [monitoring_granularity](#input\_monitoring\_granularity) | Monitoring Interval, in seconds, to apply on each DB instance | `number` | `0` | no |  |
-| <a name="create_monitoring_role"></a> [create_monitoring_role](#input\_create\_monitoring\_role) | Flag to decide if IAM role to be created for monitoring | `bool` | `false` | no |  |
-| <a name="monitoring_role_name"></a> [monitoring_role_name](#input\_monitoring\_role\_name) | RDS Monitoring Role Name | `string` | `"rds-monitoring-role"` | no |  |
+| Name | Description | Type | Default | Required |
+|:------|:------|:------|:------|:------:|
+| <a name="performance_insights_enabled"></a> [performance_insights_enabled](#input\_performance\_insights\_enabled) | Specifies whether Performance Insights is enabled or not | `bool` | `false` | no |
+| <a name="performance_insights_kms_key"></a> [performance_insights_kms_key](#input\_performance\_insights\_kms\_key) | The reference of the KMS key to encrypt Performance Insights data. | `string` | `null` | no |
+| <a name="performance_insights_retention_period"></a> [performance_insights_retention_period](#input\_performance\_insights\_retention\_period) | Amount of time in days to retain Performance Insights data. Either 7 (7 days) or 731 (2 years) | `number` | `7` | no |
+| <a name="enable_enhanced_monitoring"></a> [enable_enhanced_monitoring](#input\_enable\_enhanced\_monitoring) | Flag to decide if enhanced monitoring should be enabled | `bool` | `false` | no |
+| <a name="monitoring_granularity"></a> [monitoring_granularity](#input\_monitoring\_granularity) | Monitoring Interval, in seconds, to apply on each DB instance | `number` | `0` | no |
+| <a name="create_monitoring_role"></a> [create_monitoring_role](#input\_create\_monitoring\_role) | Flag to decide if IAM role to be created for monitoring | `bool` | `false` | no |
+| <a name="monitoring_role_name"></a> [monitoring_role_name](#input\_monitoring\_role\_name) | RDS Monitoring Role Name | `string` | `"rds-monitoring-role"` | no |
 
 #### DB Instance specific properties
 ---
