@@ -35,8 +35,9 @@ This module features the following components to be provisioned with different c
 Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-examples/tree/main/aws-rds-aurora) for effectively utilizing this module.
 
 ## Inputs
----
 
+#### DB Cluster specific properties
+---
 | Name | Description | Type | Default | Required | Example|
 |:------|:------|:------|:------|:------:|:------|
 | <a name="create_global_cluster"></a> [create_global_cluster](#input\_create\_global\_cluster) | Flag to decide if create Aurora global database spread across multiple regions | `bool` | `false` | no |  |
@@ -92,15 +93,11 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="create_db_parameter_group"></a> [create_db_parameter_group](#input\_create\_db\_parameter\_group) | Flag to decide if a new database instance parameter group should be created | `bool` | `false` | no |  |
 | <a name="db_parameter_group"></a> [db_parameter_group](#parameter\_group) | The configuration map of the DB instance parameter group | `map` | `{}` | no |  |
 | <a name="db_parameter_group_parameters"></a> [db_parameter_group_parameters](#parameter\_group\_parameters) | A list of DB parameters map to apply | `list(map(string))` | `[]` | no |  |
-| <a name="default_tags"></a> [default_tags](#input\_default\_tags) | A map of tags to assign to all the resources. | `map(string)` | `{}` | no |  |
-| <a name="cluster_tags"></a> [cluster_tags](#input\_cluster\_tags) | A map of tags to assign to the DB cluster. | `map(string)` | `{}` | no |  |
-| <a name="instance_tags"></a> [instance_tags](#input\_instance\_tags) | A map of tags to assign to all the DB Instance. | `map(string)` | `{}` | no |  |
-| <a name="monitoring_role_tags"></a> [monitoring_role_tags](#input\_monitoring\_role\_tags) | A map of tags to assign to the Monitoring IAM Role. | `map(string)` | `{}` | no |  |
-| <a name="ssm_parameter_prefix"></a> [ssm_parameter_prefix](#input\_ssm\_parameter\_prefix) | Prefix for SSM paramteres | `string` | `""` | no |  |
-| <a name="ssm_cluster_host"></a> [ssm_cluster_host](#input\_ssm\_cluster\_host) | Flag to decide if the cluster_host should be stored as SSM parameter | `bool` | `true` | no |  |
-| <a name="ssm_database_name"></a> [ssm_database_name](#input\_ssm\_database\_name) | Flag to decide if the database_name should be stored as SSM parameter | `bool` | `true` | no |  |
-| <a name="ssm_master_username"></a> [ssm_master_username](#input\_ssm\_master\_username) | Flag to decide if the master_username should be stored as SSM parameter | `bool` | `true` | no |  |
-| <a name="ssm_master_password"></a> [ssm_master_password](#input\_ssm\_master\_password) | Flag to decide if the master_password should be stored as SSM parameter | `bool` | `true` | no |  |
+
+#### DB Instance specific properties
+---
+| Name | Description | Type | Default | Required | Example|
+|:------|:------|:------|:------|:------:|:------|
 | <a name="instance_class"></a> [instance_class](#input\_instance\_class) | The compute and memory capacity of each DB instance in the Multi-AZ DB cluster | `string` | `null` | no |  |
 | <a name="publicly_accessible"></a> [publicly_accessible](#input\_publicly\_accessible) | Flag to decide if instances are publicly accessible | `bool` | `false` | no |  |
 | <a name="auto_minor_version_upgrade"></a> [auto_minor_version_upgrade](#input\_auto\_minor\_version\_upgrade) | Enable to allow minor engine upgrades utomatically to the DB instance during the maintenance window. | `bool` | `true` | no |  |
@@ -114,40 +111,59 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="instances"></a> [instances](#instances) | List of cluster instances map | `list` | `[]` | no |  |
 | <a name="endpoints"></a> [endpoints](#endpoints) | List of cluster endpoints map | `list` | `[]` | no |  |
 
+#### Tags specific properties
+---
+| Name | Description | Type | Default | Required | Example|
+|:------|:------|:------|:------|:------:|:------|
+| <a name="default_tags"></a> [default_tags](#input\_default\_tags) | A map of tags to assign to all the resources. | `map(string)` | `{}` | no |  |
+| <a name="cluster_tags"></a> [cluster_tags](#input\_cluster\_tags) | A map of tags to assign to the DB cluster. | `map(string)` | `{}` | no |  |
+| <a name="instance_tags"></a> [instance_tags](#input\_instance\_tags) | A map of tags to assign to all the DB Instance. | `map(string)` | `{}` | no |  |
+| <a name="monitoring_role_tags"></a> [monitoring_role_tags](#input\_monitoring\_role\_tags) | A map of tags to assign to the Monitoring IAM Role. | `map(string)` | `{}` | no |  |
+
+#### SSM Parameter specific properties
+---
+| Name | Description | Type | Default | Required | Example|
+|:------|:------|:------|:------|:------:|:------|
+| <a name="ssm_parameter_prefix"></a> [ssm_parameter_prefix](#input\_ssm\_parameter\_prefix) | Prefix for SSM paramteres | `string` | `""` | no |  |
+| <a name="ssm_cluster_host"></a> [ssm_cluster_host](#input\_ssm\_cluster\_host) | Flag to decide if the cluster_host should be stored as SSM parameter | `bool` | `true` | no |  |
+| <a name="ssm_database_name"></a> [ssm_database_name](#input\_ssm\_database\_name) | Flag to decide if the database_name should be stored as SSM parameter | `bool` | `true` | no |  |
+| <a name="ssm_master_username"></a> [ssm_master_username](#input\_ssm\_master\_username) | Flag to decide if the master_username should be stored as SSM parameter | `bool` | `true` | no |  |
+| <a name="ssm_master_password"></a> [ssm_master_password](#input\_ssm\_master\_password) | Flag to decide if the master_password should be stored as SSM parameter | `bool` | `true` | no |  |
+
 ## Nested Configuration Maps:  
 
 #### scaling_configuration
 
-| Name | Description | Type | Default | Required | Example|
-|:------|:------|:------|:------|:------:|:------|
-| <a name="auto_pause"></a> [auto_pause](#input\_auto\_pause) | Whether to enable automatic pause. | `bool` | `true` | no |  |
-| <a name="max_capacity"></a> [max_capacity](#input\_max\_capacity) | The maximum capacity for an Aurora DB cluster in serverless DB engine mode. | `number` | `16` | no |  |
-| <a name="min_capacity"></a> [min_capacity](#input\_min\_capacity) | The minimum capacity for an Aurora DB cluster in serverless DB engine mode. | `number` | `1` | no |  |
-| <a name="seconds_until_auto_pause"></a> [seconds_until_auto_pause](#input\_seconds\_until\_auto\_pause) | The time, in seconds, before an Aurora DB cluster in serverless mode is paused. | `number` | `300` | no |  |
-| <a name="timeout_action"></a> [timeout_action](#input\_timeout\_action) | The action to take when the timeout is reached. | `string` | `RollbackCapacityChange` | no |  |
+| Name | Description | Type | Default | Required |
+|:------|:------|:------|:------|:------:|
+| <a name="auto_pause"></a> [auto_pause](#input\_auto\_pause) | Whether to enable automatic pause. | `bool` | `true` | no |
+| <a name="max_capacity"></a> [max_capacity](#input\_max\_capacity) | The maximum capacity for an Aurora DB cluster in serverless DB engine mode. | `number` | `16` | no |
+| <a name="min_capacity"></a> [min_capacity](#input\_min\_capacity) | The minimum capacity for an Aurora DB cluster in serverless DB engine mode. | `number` | `1` | no |
+| <a name="seconds_until_auto_pause"></a> [seconds_until_auto_pause](#input\_seconds\_until\_auto\_pause) | The time, in seconds, before an Aurora DB cluster in serverless mode is paused. | `number` | `300` | no |
+| <a name="timeout_action"></a> [timeout_action](#input\_timeout\_action) | The action to take when the timeout is reached. | `string` | `RollbackCapacityChange` | no |
 
 #### serverlessv2_scaling_configuration
 
-| Name | Description | Type | Default | Required | Example|
-|:------|:------|:------|:------|:------:|:------|
-| <a name="max_capacity"></a> [max_capacity](#input\_max\_capacity) | The maximum capacity for an Aurora DB cluster in provisioned DB engine mode. | `number` | `16` | no |  |
-| <a name="min_capacity"></a> [min_capacity](#input\_min\_capacity) | The minimum capacity for an Aurora DB cluster in provisioned DB engine mode. | `number` | `1` | no |  |
+| Name | Description | Type | Default | Required |
+|:------|:------|:------|:------|:------:|
+| <a name="max_capacity"></a> [max_capacity](#input\_max\_capacity) | The maximum capacity for an Aurora DB cluster in provisioned DB engine mode. | `number` | `16` | no |
+| <a name="min_capacity"></a> [min_capacity](#input\_min\_capacity) | The minimum capacity for an Aurora DB cluster in provisioned DB engine mode. | `number` | `1` | no |
 
 #### parameter_group
 
-| Name | Description | Type | Default | Required | Example|
-|:------|:------|:------|:------|:------:|:------|
-| <a name="name"></a> [name](#input\_name) | The name of the DB parameter group. | `string` |  | yes |  |
-| <a name="family"></a> [family](#input\_family) | The family of the DB parameter group | `string` |  | yes |  |
-| <a name="description"></a> [description](#input\_description) | The description of the DB parameter group. | `string` |  | no |  |
-| <a name="tags"></a> [tags](#input\_tags) | A map of tags to assign to the resource. | `string` | `{}` | no |  |
+| Name | Description | Type | Default | Required |
+|:------|:------|:------|:------|:------:|
+| <a name="name"></a> [name](#input\_name) | The name of the DB parameter group. | `string` |  | yes |
+| <a name="family"></a> [family](#input\_family) | The family of the DB parameter group | `string` |  | yes |
+| <a name="description"></a> [description](#input\_description) | The description of the DB parameter group. | `string` |  | no |
+| <a name="tags"></a> [tags](#input\_tags) | A map of tags to assign to the resource. | `string` | `{}` | no |
 
 #### parameter_group_parameters
-| Name | Description | Type | Default | Required | Example|
-|:------|:------|:------|:------|:------:|:------|
-| <a name="name"></a> [name](#input\_name) | The name of the DB parameter. | `string` |  | yes |  |
-| <a name="value"></a> [value](#input\_value) | The value of the DB parameter. | `string` |  | yes |  |
-| <a name="apply_method"></a> [apply_method](#input\_apply\_method) | "immediate" (default), or "pending-reboot". | `string` | `immediate` | no |  |
+| Name | Description | Type | Default | Required |
+|:------|:------|:------|:------|:------:|
+| <a name="name"></a> [name](#input\_name) | The name of the DB parameter. | `string` |  | yes |
+| <a name="value"></a> [value](#input\_value) | The value of the DB parameter. | `string` |  | yes |
+| <a name="apply_method"></a> [apply_method](#input\_apply\_method) | "immediate" (default), or "pending-reboot". | `string` | `immediate` | no |
 
 #### instances
 
@@ -155,33 +171,33 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
     - `publicly_accessible` defined at instance level is used to override the commom properties for instances `publicly_accessible` 
     - ...
 
-| Name | Description | Type | Default | Required | Example|
-|:------|:------|:------|:------|:------:|:------|
-| <a name="name"></a> [name](#input\_name) | The identifier for the RDS instance | `string` |  | yes |  |
-| <a name="instance_class"></a> [instance_class](#input\_instance\_class) | The instance class to use. | `string` |  | yes |  |
-| <a name="availability_zone"></a> [availability_zone](#input\_availability\_zone) | The EC2 Availability Zone that the DB instance is created in. | `string` |  | no |  |
-| <a name="publicly_accessible"></a> [publicly_accessible](#input\_publicly\_accessible) | Flag to control if instance is publicly accessible. | `bool` |  | no |  |
-| <a name="promotion_tier"></a> [promotion_tier](#input\_promotion\_tier) | Failover Priority setting on instance level. | `number` | `0` | no |  |
-| <a name="auto_minor_version_upgrade"></a> [auto_minor_version_upgrade](#input\_auto\_minor\_version\_upgrade) | Enable to allow minor engine upgrades utomatically to the DB instance during the maintenance window. | `bool` |  | no |  |
-| <a name="apply_immediately"></a> [apply_immediately](#input\_apply\_immediately) | Specifies whether any database modifications are applied immediately, or during the next maintenance window. | `bool` |  | no |  |
-| <a name="monitoring_granularity"></a> [monitoring_granularity](#input\_monitoring\_granularity) |  | `number` | The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance.  | no |  |
-| <a name="preferred_maintenance_window"></a> [preferred_maintenance_window](#input\_preferred\_maintenance\_window) | The window to perform maintenance in. | `string` |  | no |  |
-| <a name="performance_insights_enabled"></a> [performance_insights_enabled](#input\_performance\_insights\_enabled) | Specifies whether Performance Insights is enabled or not. | `bool` |  | no |  |
-| <a name="performance_insights_retention_period"></a> [performance_insights_retention_period](#input\_performance\_insights\_retention\_period) | Amount of time in days to retain Performance Insights data. | `number` |  | no |  |
-| <a name="copy_tags_to_snapshot"></a> [copy_tags_to_snapshot](#input\_copy\_tags\_to\_snapshot) | Copy all tags from DB instance to snapshots. | `bool` |  | no |  |
-| <a name="tags"></a> [tags](#input\_tags) | A map of tags to assign to the DB Instance. | `map(string)` | `{}` | no |  |
+| Name | Description | Type | Default | Required |
+|:------|:------|:------|:------|:------:|
+| <a name="name"></a> [name](#input\_name) | The identifier for the RDS instance | `string` |  | yes |
+| <a name="instance_class"></a> [instance_class](#input\_instance\_class) | The instance class to use. | `string` |  | yes |
+| <a name="availability_zone"></a> [availability_zone](#input\_availability\_zone) | The EC2 Availability Zone that the DB instance is created in. | `string` |  | no |
+| <a name="publicly_accessible"></a> [publicly_accessible](#input\_publicly\_accessible) | Flag to control if instance is publicly accessible. | `bool` |  | no |
+| <a name="promotion_tier"></a> [promotion_tier](#input\_promotion\_tier) | Failover Priority setting on instance level. | `number` | `0` | no |
+| <a name="auto_minor_version_upgrade"></a> [auto_minor_version_upgrade](#input\_auto\_minor\_version\_upgrade) | Enable to allow minor engine upgrades utomatically to the DB instance during the maintenance window. | `bool` |  | no |
+| <a name="apply_immediately"></a> [apply_immediately](#input\_apply\_immediately) | Specifies whether any database modifications are applied immediately, or during the next maintenance window. | `bool` |  | no |
+| <a name="monitoring_granularity"></a> [monitoring_granularity](#input\_monitoring\_granularity) | The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. | `number` |  | no |
+| <a name="preferred_maintenance_window"></a> [preferred_maintenance_window](#input\_preferred\_maintenance\_window) | The window to perform maintenance in. | `string` |  | no |
+| <a name="performance_insights_enabled"></a> [performance_insights_enabled](#input\_performance\_insights\_enabled) | Specifies whether Performance Insights is enabled or not. | `bool` |  | no |
+| <a name="performance_insights_retention_period"></a> [performance_insights_retention_period](#input\_performance\_insights\_retention\_period) | Amount of time in days to retain Performance Insights data. | `number` |  | no |
+| <a name="copy_tags_to_snapshot"></a> [copy_tags_to_snapshot](#input\_copy\_tags\_to\_snapshot) | Copy all tags from DB instance to snapshots. | `bool` |  | no |
+| <a name="tags"></a> [tags](#input\_tags) | A map of tags to assign to the DB Instance. | `map(string)` | `{}` | no |
 
 #### endpoints
 
 - Either `static_members` or `excluded_members` can be specified as they conflict with each other
 
-| Name | Description | Type | Default | Required | Example|
-|:------|:------|:------|:------|:------:|:------|
-| <a name="identifier"></a> [identifier](#input\_identifier) |  | `string` |  | yes |  |
-| <a name="type"></a> [type](#input\_type) |  | `string` |  | yes |  |
-| <a name="static_members"></a> [static_members](#input\_static\_members) | List of DB instance identifiers that are part of the custom endpoint group. | `list(string)` | `null` | no |  |
-| <a name="excluded_members"></a> [excluded_members](#input\_excluded\_members) | List of DB instance identifiers that are not part of the custom endpoint group. | `list(string)` | `null` | no |  |
-| <a name="tags"></a> [tags](#input\_tags) | A map of tags to assign to the custom endpoint. | `map(string)` | `{}` | no |  |
+| Name | Description | Type | Default | Required |
+|:------|:------|:------|:------|:------:|
+| <a name="identifier"></a> [identifier](#input\_identifier) |  | `string` |  | yes |
+| <a name="type"></a> [type](#input\_type) |  | `string` |  | yes |
+| <a name="static_members"></a> [static_members](#input\_static\_members) | List of DB instance identifiers that are part of the custom endpoint group. | `list(string)` | `null` | no |
+| <a name="excluded_members"></a> [excluded_members](#input\_excluded\_members) | List of DB instance identifiers that are not part of the custom endpoint group. | `list(string)` | `null` | no |
+| <a name="tags"></a> [tags](#input\_tags) | A map of tags to assign to the custom endpoint. | `map(string)` | `{}` | no |
 
 #### sg_rules
 [ Ingress / Egress ]
@@ -191,17 +207,17 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 - `source_security_group_id` Cannot be specified with `cidr_blocks`, `ipv6_cidr_blocks` or `self`.
 - `self` Cannot be specified with `cidr_blocks`, `ipv6_cidr_blocks` or `source_security_group_id`.
 
-| Name | Description | Type | Default | Required | Example|
-|:------|:------|:------|:------|:------:|:------|
-| <a name="rule_name"></a> [rule_name](#input\_rule\_name) | The name of the Rule (Used for terraform perspective to maintain unicity) | `string` |  | yes | |
-| <a name="description"></a> [description](#input\_description) | Description of the rule. | `string` |  | yes | |
-| <a name="from_port"></a> [from_port](#input\_from\_port) | Start port (or ICMP type number if protocol is "icmp" or "icmpv6"). | `number` |  | yes | |
-| <a name="to_port"></a> [to_port](#input\_to\_port) | End port (or ICMP code if protocol is "icmp"). | `number` |  | yes | |
-| <a name="protocol"></a> [protocol](#input\_protocol) | Protocol. If not icmp, icmpv6, tcp, udp, or all use the protocol number | `string | number` |  | yes | |
-| <a name="self"></a> [self](#input\_self) | Whether the security group itself will be added as a source to this ingress rule.  | `bool` |  | no | |
-| <a name="cidr_blocks"></a> [cidr_blocks](#input\_cidr\_blocks) | List of IPv4 CIDR blocks | `list(string)` |  | no | |
-| <a name="ipv6_cidr_blocks"></a> [ipv6_cidr_blocks](#input\_ipv6\_cidr\_blocks) | List of IPv6 CIDR blocks. | `list(string)` |  | no | |
-| <a name="source_security_group_id"></a> [source_security_group_id](#input\_source\_security\_group\_id) | Security group id to allow access to/from | `string` |  | no | |
+| Name | Description | Type | Default | Required |
+|:------|:------|:------|:------|:------:|
+| <a name="rule_name"></a> [rule_name](#input\_rule\_name) | The name of the Rule (Used for terraform perspective to maintain unicity) | `string` |  | yes |
+| <a name="description"></a> [description](#input\_description) | Description of the rule. | `string` |  | yes |
+| <a name="from_port"></a> [from_port](#input\_from\_port) | Start port (or ICMP type number if protocol is "icmp" or "icmpv6"). | `number` |  | yes |
+| <a name="to_port"></a> [to_port](#input\_to\_port) | End port (or ICMP code if protocol is "icmp"). | `number` |  | yes |
+| <a name="protocol"></a> [protocol](#input\_protocol) | Protocol. If not icmp, icmpv6, tcp, udp, or all use the protocol number | `string \| number` |  | yes |
+| <a name="self"></a> [self](#input\_self) | Whether the security group itself will be added as a source to this ingress rule.  | `bool` |  | no |
+| <a name="cidr_blocks"></a> [cidr_blocks](#input\_cidr\_blocks) | List of IPv4 CIDR blocks | `list(string)` |  | no |
+| <a name="ipv6_cidr_blocks"></a> [ipv6_cidr_blocks](#input\_ipv6\_cidr\_blocks) | List of IPv6 CIDR blocks. | `list(string)` |  | no |
+| <a name="source_security_group_id"></a> [source_security_group_id](#input\_source\_security\_group\_id) | Security group id to allow access to/from | `string` |  | no |
 
 ## Outputs
 
