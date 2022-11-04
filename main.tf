@@ -16,10 +16,9 @@ module "rds_security_group" {
     vpc_id = var.vpc_id
     name = local.sg_name
 
-    ingress_rules = local.sg_ingress_rules
+    ingress_rules = concat(local.sg_ingress_rules, local.sg_ingress_rules_source_sg)
     egress_rules  = local.sg_egress_rules
 }
-
 
 ## IAM Role for Enhanced Monitoring
 module "rds_monitoring_role" {
