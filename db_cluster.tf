@@ -29,8 +29,8 @@ resource aws_rds_cluster "this" {
     master_username     = var.primary_cluster ? var.master_username : null
     master_password     = var.primary_cluster ? local.master_password : null
     
-    ## Only applicable for Aurora (Global Cluster)
-    enable_global_write_forwarding = var.enable_global_write_forwarding
+    ## Only applicable for Aurora - secondary cluster (Global Cluster)
+    enable_global_write_forwarding = var.primary_cluster ? null : var.enable_global_write_forwarding
 
     ## Availability & durability
     availability_zones  = var.availability_zones
