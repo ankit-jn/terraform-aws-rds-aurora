@@ -59,7 +59,7 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="create_db_subnet_group"></a> [create_db_subnet_group](#input\_create\_db\_subnet\_group) | Flag to decide if DB subnet group should be created | `bool` | `true` | no |  |
 | <a name="db_subnet_group_name"></a> [db_subnet_group_name](#input\_db\_subnet\_group\_name) | The name of the subnet group name | `string` | `null` | no |  |
 | <a name="subnets"></a> [subnets](#input\_subnets) | The list of subnet IDs used by database subnet group | `list(string)` | `[]` | no |  |
-| <a name="additional_sg"></a> [additional_sg](#input\_additional\_sg) | List of Existing Security Group IDs associated with Database. | `list(string)` | `[]` | no |  |
+| <a name="additional_sg"></a> [additional_sg](#input\_additional\_sg) | List of Existing Security Group IDs associated with Database. | `list(string)` | `[]` | no | <pre>[<br>   "sg-xxxxx......",<br>   "sg-xxxx4747cv..."<br>] |
 | <a name="create_sg"></a> [create_sg](#input\_create\_sg) | Flag to decide to create Security Group for Database | `bool` | `false` | no |  |
 | <a name="sg_name"></a> [sg_name](#input\_sg\_name) | The name of the Security group | `string` | `""` | no |  |
 | <a name="sg_rules"></a> [sg_rules](#sg\_rules) | Configuration map for Security Group Rules | `map` | `{}` | no | <pre>{<br>   ingress = [<br>      {<br>        rule_name = "Self Ingress Rule"<br>        description = "Self Ingress Rule"<br>        from_port =0<br>        to_port = 0<br>        protocol = "-1"<br>        self = true<br>      },<br>      {<br>        rule_name = "Ingress from IPv4 CIDR"<br>        description = "IPv4 Rule"<br>        from_port = 443<br>        to_port = 443<br>        protocol = "tcp"<br>        cidr_blocks = [<br>          "xx.xx.xx.xx/xx",<br>          "yy.yy.yy.yy/yy"<br>        ]<br>      }<br>   ]<br>   egress =[<br>      {<br>        rule_name = "Self Egress Rule"<br>        description = "Self Egress Rule"<br>        from_port =0<br>        to_port = 0<br>        protocol = "-1"<br>        self = true<br>      }<br>   ]<br>} |
@@ -74,22 +74,22 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="snapshot_identifier"></a> [snapshot_identifier](#input\_snapshot\_identifier) | Specifies whether or not to create this cluster from a snapshot. | `string` | `null` | no |  |
 | <a name="skip_final_snapshot"></a> [skip_final_snapshot](#input\_skip\_final\_snapshot) | Determines whether a final DB snapshot is created before the DB cluster is deleted. | `bool` | `false` | no |  |
 | <a name="final_snapshot_identifier"></a> [final_snapshot_identifier](#input\_final\_snapshot\_identifier) | The name of your final DB snapshot when this DB cluster is deleted. | `string` | `null` | no |  |
-| <a name="storage_encrypted"></a> [storage_encrypted](#input\_storage\_encrypted) | Specifies whether the DB cluster is encrypted. | `bool` | `null` | no |  |
+| <a name="storage_encrypted"></a> [storage_encrypted](#input\_storage\_encrypted) | Specifies whether the DB cluster is encrypted. <br>Mandatory to pass it in case of secondary cluster of Global Aurora cluster, if `storage_encrypted` is set `true`  | `bool` | `null` | no |  |
 | <a name="kms_key"></a> [kms_key](#input\_kms\_key) | The reference of the KMS key to use for encryption | `string` | `null` | no |  |
 | <a name="backtrack_window"></a> [backtrack_window](#input\_backtrack\_window) | The target backtrack window, in seconds. | `number` | `0` | no |  |
-| <a name="enabled_cloudwatch_logs_exports"></a> [enabled_cloudwatch_logs_exports](#input\_enabled\_cloudwatch\_logs\_exports) | Set of log types to export to cloudwatch. | `set(string)` | `[]` | no |  |
+| <a name="enabled_cloudwatch_logs_exports"></a> [enabled_cloudwatch_logs_exports](#input\_enabled\_cloudwatch\_logs\_exports) | Set of log types to export to cloudwatch. | `set(string)` | `[]` | no | ["audit", "error"] |
 | <a name="allow_major_version_upgrade"></a> [allow_major_version_upgrade](#input\_allow\_major\_version\_upgrade) | Enable to allow major engine version upgrades when changing engine versions. | `bool` | `false` | no |  |
-| <a name="preferred_maintenance_window"></a> [preferred_maintenance_window](#input\_preferred\_maintenance\_window) | The weekly time range during which system maintenance can occur, in (UTC). | `string` | `null` | no |  |
+| <a name="preferred_maintenance_window"></a> [preferred_maintenance_window](#input\_preferred\_maintenance\_window) | The weekly time range during which system maintenance can occur, in (UTC). | `string` | `null` | no | "Sun:04:00-Sun:04:30" |
 | <a name="apply_immediately"></a> [apply_immediately](#input\_apply\_immediately) | Specifies whether any cluster modifications are applied immediately, or during the next maintenance window. | `bool` | `false` | no |  |
 | <a name="deletion_protection"></a> [deletion_protection](#input\_deletion\_protection) | Flag to decide if the DB instance should have deletion protection enabled. | `bool` | `false` | no |  |
-| <a name="scaling_configuration"></a> [scaling_configuration](#scaling\_configuration) | Map of the following Scaling configuirations for Serverless Engine mode. | `map(string)` | `{}` | no |  |
-| <a name="serverlessv2_scaling_configuration"></a> [serverlessv2_scaling_configuration](#serverlessv2\_scaling\_configuration) | Map of the Scaling configuirations for Provisioned Engine mode. | `map(string)` | `{}` | no |  |
+| <a name="scaling_configuration"></a> [scaling_configuration](#scaling\_configuration) | Map of the following Scaling configuirations for Serverless Engine mode. | `map(string)` | `{}` | no | <pre>{<br>   auto_pause               = true<br>   min_capacity             = 2<br>   max_capacity             = 4<br>   seconds_until_auto_pause = 300<br>   timeout_action           = "ForceApplyCapacityChange"<br>} |
+| <a name="serverlessv2_scaling_configuration"></a> [serverlessv2_scaling_configuration](#serverlessv2\_scaling\_configuration) | Map of the Scaling configuirations for Provisioned Engine mode. | `map(string)` | `{}` | no | <pre>{<br>   min_capacity = 1<br>   max_capacity = 4<br>} |
 | <a name="create_db_cluster_parameter_group"></a> [create_db_cluster_parameter_group](#input\_create\_db\_cluster\_parameter\_group) | Flag to decide if a new cluster parameter group should be created | `bool` | `false` | no |  |
-| <a name="db_cluster_parameter_group"></a> [db_cluster_parameter_group](#parameter\_group) | The configuration map of the DB cluster parameter group | `map` | `{}` | no |  |
-| <a name="db_cluster_parameter_group_parameters"></a> [db_cluster_parameter_group_parameters](#parameter\_group\_parameters) | A list of DB cluster parameter group parameters map to apply | `list(map(string))` | `[]` | no |  |
+| <a name="db_cluster_parameter_group"></a> [db_cluster_parameter_group](#parameter\_group) | The configuration map of the DB cluster parameter group | `map` | `{}` | no | <pre>{<br>   name = "aurora-cluster-arjstack-pg"<br>   family = "aurora-mysql5.7"<br>} |
+| <a name="db_cluster_parameter_group_parameters"></a> [db_cluster_parameter_group_parameters](#parameter\_group\_parameters) | A list of DB cluster parameter group parameters map to apply | `list(map(string))` | `[]` | no | <pre>[<br>   {<br>     name         = "connect_timeout"<br>     value        = 120<br>     apply_method = "immediate"<br>   }<br>] |
 | <a name="create_db_parameter_group"></a> [create_db_parameter_group](#input\_create\_db\_parameter\_group) | Flag to decide if a new database instance parameter group should be created | `bool` | `false` | no |  |
-| <a name="db_parameter_group"></a> [db_parameter_group](#parameter\_group) | The configuration map of the DB instance parameter group | `map` | `{}` | no |  |
-| <a name="db_parameter_group_parameters"></a> [db_parameter_group_parameters](#parameter\_group\_parameters) | A list of DB parameters map to apply | `list(map(string))` | `[]` | no |  |
+| <a name="db_parameter_group"></a> [db_parameter_group](#parameter\_group) | The configuration map of the DB instance parameter group | `map` | `{}` | no | <pre>{<br>   name = "aurora-db-arjstack-pg"<br>   family = "aurora-mysql5.7"<br>} |
+| <a name="db_parameter_group_parameters"></a> [db_parameter_group_parameters](#parameter\_group\_parameters) | A list of DB parameters map to apply | `list(map(string))` | `[]` | no | <pre>[<br>   {<br>     name         = "connect_timeout"<br>     value        = 60<br>     apply_method = "immediate"<br>   }<br>] |
 
 #### Monitoring Properties
 ---
@@ -111,8 +111,8 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="publicly_accessible"></a> [publicly_accessible](#input\_publicly\_accessible) | Flag to decide if instances are publicly accessible | `bool` | `false` | no |  |
 | <a name="auto_minor_version_upgrade"></a> [auto_minor_version_upgrade](#input\_auto\_minor\_version\_upgrade) | Enable to allow minor engine upgrades utomatically to the DB instance during the maintenance window. | `bool` | `true` | no |  |
 | <a name="ca_cert_identifier"></a> [ca_cert_identifier](#input\_ca\_cert\_identifier) | The identifier of the CA certificate for the DB instance. | `string` | `null` | no |  |
-| <a name="instances"></a> [instances](#instances) | List of cluster instances map | `list` | `[]` | no |  |
-| <a name="endpoints"></a> [endpoints](#endpoints) | List of cluster endpoints map | `list` | `[]` | no |  |
+| <a name="instances"></a> [instances](#instances) | List of cluster instances map | `list` | `[]` | no | <pre>[<br>   {<br>     name = "first"<br>     monitoring_granularity = 30<br>   },<br>   {<br>     name = "second"<br>     promotion_tier = 3<br>     monitoring_granularity = 60<br>     preferred_maintenance_window = "Mon:04:00-Mon:04:30"<br>   }<br>] |
+| <a name="endpoints"></a> [endpoints](#endpoints) | List of cluster endpoints map | `list` | `[]` | no | <pre>[<br>   {<br>     identifier = "ep-analysis"<br>     type = "READER"<br>     static_members = ["third"]<br>   }<br>] |
 
 #### SSM Parameter specific properties
 ---
