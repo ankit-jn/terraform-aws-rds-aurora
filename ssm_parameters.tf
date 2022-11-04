@@ -3,7 +3,7 @@
 ## applications can request credentials via this store by using the name
 #########################################################################################
 resource aws_ssm_parameter "cluster_host" {
-    count = (var.create_cluster && var.primary_cluster && var.ssm_cluster_host) ? 1 : 0
+    count = (var.create_cluster && var.ssm_cluster_host) ? 1 : 0
     
     name        = format("%s/%s/host", var.ssm_parameter_prefix, var.database_name)
     description = "Host of aurora database"
