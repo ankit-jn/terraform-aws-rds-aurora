@@ -44,7 +44,7 @@ resource aws_rds_cluster "this" {
     iam_database_authentication_enabled = var.iam_database_authentication_enabled
 
     ## Additional configuration
-    database_name = var.database_name
+    database_name = var.primary_cluster ? var.database_name : null
     db_cluster_parameter_group_name   = var.create_db_cluster_parameter_group ? aws_rds_cluster_parameter_group.this[0].id : lookup(var.db_cluster_parameter_group, "name", null)
     db_instance_parameter_group_name  = var.create_db_parameter_group ? aws_db_parameter_group.this[0].id : lookup(var.db_parameter_group, "name", null)
 
