@@ -283,6 +283,10 @@ key Reference could be either of this format:
 - arn:aws:kms:<region>:<account no>:key/1234abcd-12ab-34cd-56ef-1234567890ab
 - alias/my-key
 - arn:aws:kms:<region>:<account no>:alias/my-key
+
+Note: 
+Mandatory to pass it in case of secondary cluster of Global Aurora cluster, 
+if `storage_encrypted` is set `true` 
 EOF
     type    = string
     default = null
