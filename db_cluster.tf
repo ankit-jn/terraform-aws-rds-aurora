@@ -70,7 +70,7 @@ resource aws_rds_cluster "this" {
                                && var.engine_mode != "serverless") ? var.backtrack_window : 0
 
     ## Log Exports
-    enabled_cloudwatch_logs_exports = var.enabled_cloudwatch_logs_exports
+    enabled_cloudwatch_logs_exports = var.engine_mode == "serverless" ? null : var.enabled_cloudwatch_logs_exports
 
     ## Maintenance
     allow_major_version_upgrade   = var.allow_major_version_upgrade
