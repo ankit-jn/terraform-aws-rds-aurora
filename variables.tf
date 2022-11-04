@@ -210,6 +210,7 @@ variable "iam_database_authentication_enabled" {
 variable "database_name" {
     description = "Name for an automatically created database on cluster creation."
     type        = string
+    value       = null
 }
 
 variable "enable_http_endpoint" {
