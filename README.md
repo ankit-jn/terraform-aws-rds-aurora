@@ -1,8 +1,8 @@
-# ARJ-Stack: AWS Relational Database Service - Amazon Aurora, Terraform module
+## ARJ-Stack: AWS Relational Database Service - Amazon Aurora, Terraform module
 
 A Terraform module for configuring AWS RDS - Amazon Aurora
 
-## Resources
+### Resources
 This module features the following components to be provisioned with different combinations:
 
 - Global Amazon Aurora Cluster [[aws_rds_global_cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/rds_global_cluster)]
@@ -17,24 +17,24 @@ This module features the following components to be provisioned with different c
 - RDS Monitoring IAM Role [[aws_iam_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role)]
 - SSM Parameters [[aws_ssm_parameter](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter)]
 
-## Requirements
+### Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2.5 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.22.0 |
 
-## Providers
+### Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.22.0 |
 
-## Examples
+### Examples
 
 Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-examples/tree/main/aws-rds-aurora) for effectively utilizing this module.
 
-## Inputs
+### Inputs
 
 #### DB Cluster specific properties
 ---
@@ -133,7 +133,7 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="instance_tags"></a> [instance_tags](#input\_instance\_tags) | A map of tags to assign to all the DB Instance. | `map(string)` | `{}` | no |
 | <a name="monitoring_role_tags"></a> [monitoring_role_tags](#input\_monitoring\_role\_tags) | A map of tags to assign to the Monitoring IAM Role. | `map(string)` | `{}` | no |
 
-## Nested Configuration Maps:  
+### Nested Configuration Maps:  
 
 #### scaling_configuration
 
@@ -222,7 +222,7 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="ipv6_cidr_blocks"></a> [ipv6_cidr_blocks](#input\_ipv6\_cidr\_blocks) | List of IPv6 CIDR blocks. | `list(string)` |  | no |
 | <a name="source_security_group_id"></a> [source_security_group_id](#input\_source\_security\_group\_id) | Security group id to allow access to/from | `string` |  | no |
 
-## Outputs
+### Outputs
 
 | Name | Type | Description |
 |:------|:------|:------|
@@ -241,7 +241,7 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 | <a name="ssm_paramter_master_password"></a> [ssm_paramter_master_password](#output\_ssm\_paramter\_master\_password) | `string` | The SSM Parameter ARN for Master password |
 | <a name="sg_id"></a> [sg_id](#output\_sg\_id) | `string` | The Security Group ID associated to RDS |
 
-## Authors
+### Authors
 
 Module is maintained by [Ankit Jain](https://github.com/ankit-jn) with help from [these professional](https://github.com/arjstack/terraform-aws-rds-aurora/graphs/contributors).
 
