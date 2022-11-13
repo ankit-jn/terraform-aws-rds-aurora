@@ -196,8 +196,8 @@ Refer [Configuration Examples](https://github.com/arjstack/terraform-aws-example
 
 | Name | Description | Type | Default | Required |
 |:------|:------|:------|:------|:------:|
-| <a name="identifier"></a> [identifier](#input\_identifier) |  | `string` |  | yes |
-| <a name="type"></a> [type](#input\_type) |  | `string` |  | yes |
+| <a name="identifier"></a> [identifier](#input\_identifier) | The identifier to use for the new endpoint. | `string` |  | yes |
+| <a name="type"></a> [type](#input\_type) | The type of the endpoint. One of: READER, ANY. | `string` |  | yes |
 | <a name="static_members"></a> [static_members](#input\_static\_members) | List of DB instance identifiers that are part of the custom endpoint group. | `list(string)` | `null` | no |
 | <a name="excluded_members"></a> [excluded_members](#input\_excluded\_members) | List of DB instance identifiers that are not part of the custom endpoint group. | `list(string)` | `null` | no |
 | <a name="tags"></a> [tags](#input\_tags) | A map of tags to assign to the custom endpoint. | `map(string)` | `{}` | no |

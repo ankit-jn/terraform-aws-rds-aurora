@@ -578,7 +578,7 @@ variable "endpoints" {
 List of cluster endpoints map where each entry of the list may have following attributes 
 
 identifier      : (Required) The identifier to use for the new endpoint.
-type            : (Required) The type of the endpoint. One of: READER, ANY .
+type            : (Required) The type of the endpoint. One of: READER, ANY.
 static_members  : (Optional) List of DB instance identifiers that are part of the custom endpoint group.
 excluded_members: (Optional) List of DB instance identifiers that are not part of the custom endpoint group.
 tags            : (Optional) A map of tags to assign to the custom endpoint group. Default - {}
