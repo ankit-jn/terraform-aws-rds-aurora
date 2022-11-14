@@ -18,6 +18,9 @@ module "rds_security_group" {
 
     ingress_rules = concat(local.sg_ingress_rules, local.sg_ingress_rules_source_sg)
     egress_rules  = local.sg_egress_rules
+
+    tags = merge({"Name" = local.sg_name}, 
+                { "AuroraCluster" = var.cluster_name }, var.default_tags)
 }
 
 ## IAM Role for Enhanced Monitoring
@@ -27,5 +30,7 @@ module "rds_monitoring_role" {
     count = (var.enable_enhanced_monitoring && var.create_monitoring_role) ? 1 : 0
     
     service_linked_roles  = [local.rds_monitoring_role]
+    
     role_default_tags     = merge(var.default_tags, var.monitoring_role_tags)
+    policy_default_tags   = var.default_tags
 }

@@ -34,7 +34,9 @@ resource aws_rds_cluster_instance "this" {
 
     copy_tags_to_snapshot  = lookup(each.value, "copy_tags_to_snapshot", var.copy_tags_to_snapshot)
 
-    tags = merge({"Name" = each.key}, var.default_tags, var.cluster_tags, var.instance_tags, lookup(each.value, "tags", {}))
+    tags = merge({"Name" = each.key}, 
+                    { "AuroraCluster" = var.cluster_name },
+                    var.default_tags, var.cluster_tags, var.instance_tags, lookup(each.value, "tags", {}))
 }
 
 ## Cluster Endpoint(s)
@@ -50,7 +52,9 @@ resource aws_rds_cluster_endpoint "this" {
     static_members = can(each.value.static_members) ? flatten([for member in each.value.static_members : aws_rds_cluster_instance.this[member].id]) : null
     excluded_members = can(each.value.excluded_members) ? flatten([for member in each.value.excluded_members : aws_rds_cluster_instance.this[member].id]) : null
 
-    tags = merge({"Name" = each.key}, var.default_tags, var.cluster_tags, lookup(each.value, "tags", {}))
+    tags = merge({"Name" = each.key}, 
+                    { "AuroraCluster" = var.cluster_name },
+                    var.default_tags, var.cluster_tags, lookup(each.value, "tags", {}))
 
     depends_on = [
         aws_rds_cluster_instance.this

@@ -11,6 +11,7 @@ resource aws_ssm_parameter "cluster_host" {
     value       = aws_rds_cluster.this[0].endpoint
 
     tags = merge({"Name" = format("%s/%s/host", var.ssm_parameter_prefix, var.database_name)}, 
+                 { "AuroraCluster" = var.cluster_name },
                   var.default_tags, var.cluster_tags)
 }
 
@@ -23,6 +24,7 @@ resource aws_ssm_parameter "database_name" {
     value       = aws_rds_cluster.this[0].database_name
 
     tags = merge({"Name" = format("%s/%s/dbname", var.ssm_parameter_prefix, var.database_name)}, 
+                 { "AuroraCluster" = var.cluster_name },
                   var.default_tags, var.cluster_tags)
 }
 
@@ -35,6 +37,7 @@ resource aws_ssm_parameter "master_username" {
     value       = aws_rds_cluster.this[0].master_username
 
     tags = merge({"Name" = format("%s/%s/username", var.ssm_parameter_prefix, var.database_name)}, 
+                 { "AuroraCluster" = var.cluster_name },
                   var.default_tags, var.cluster_tags)
 }
 
@@ -47,5 +50,6 @@ resource aws_ssm_parameter "master_password" {
     value       = aws_rds_cluster.this[0].master_password
 
     tags = merge({"Name" = format("%s/%s/password", var.ssm_parameter_prefix, var.database_name)}, 
+                 { "AuroraCluster" = var.cluster_name },
                   var.default_tags, var.cluster_tags)
 }

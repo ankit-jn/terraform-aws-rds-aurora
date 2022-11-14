@@ -26,7 +26,8 @@ resource aws_rds_cluster_parameter_group "this" {
       }
     }
 
-    tags = merge(var.default_tags, lookup(var.db_cluster_parameter_group, "tags", {}))
+    tags = merge(var.default_tags,                  
+                  lookup(var.db_cluster_parameter_group, "tags", {}))
 }
 
 ## Database Parameter Group
@@ -47,5 +48,6 @@ resource aws_db_parameter_group "this" {
       }
     }
 
-    tags = merge(var.default_tags, lookup(var.db_parameter_group, "tags", {}))
+    tags = merge(var.default_tags, 
+                      lookup(var.db_parameter_group, "tags", {}))
 }
