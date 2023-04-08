@@ -9,7 +9,7 @@ resource random_string "master_password" {
 
 ## Security Group for RDS Aurora
 module "rds_security_group" {
-    source = "git::https://github.com/arjstack/terraform-aws-security-groups.git?ref=v1.0.0"
+    source = "git::https://github.com/ankit-jn/terraform-aws-security-groups.git"
 
     count = var.create_sg ? 1 : 0
 
@@ -25,7 +25,7 @@ module "rds_security_group" {
 
 ## IAM Role for Enhanced Monitoring
 module "rds_monitoring_role" {
-    source = "git::https://github.com/arjstack/terraform-aws-iam.git?ref=v1.0.0"
+    source = "git::https://github.com/ankit-jn/terraform-aws-iam.git"
 
     count = (var.enable_enhanced_monitoring && var.create_monitoring_role) ? 1 : 0
     
